@@ -1,11 +1,11 @@
 ---
 id: 0006
 title: Stop spam with a honeypot and a Vercel WAF rate-limit rule
-status: deciding
+status: accepted
 date: 2026-10-03
 needed-by: M2
 reversibility: easy
-decided-by:
+decided-by: shivam
 ---
 
 ## Context
@@ -48,7 +48,7 @@ Option 1. Put the rule on the **web** project, for `POST /api/v1/enquiries`, key
 
 ## Decision
 
-Pending your review.
+Option 1, as recommended (2026-10-03).
 
 ## Consequences
 

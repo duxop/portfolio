@@ -1,11 +1,11 @@
 ---
 id: 0004
 title: Send enquiry emails with Resend
-status: deciding
+status: accepted
 date: 2026-10-03
 needed-by: M2
 reversibility: easy
-decided-by:
+decided-by: shivam
 ---
 
 ## Context
@@ -43,7 +43,7 @@ Option 1. It gives a send-only key, enough free volume, and test addresses for p
 
 ## Decision
 
-Pending your review.
+Option 1, as recommended (2026-10-03).
 
 ## Consequences
 

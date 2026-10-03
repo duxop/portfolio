@@ -223,9 +223,9 @@ Crusher's API tests (`../crusher/apps/api/tests`) are the reference for the supe
 | [0001](adr/0001-monorepo-pnpm-turborepo.md) | Monorepo on pnpm workspaces and Turborepo | Accepted |
 | [0002](adr/0002-separate-express-api.md) | The enquiry endpoint lives in a separate Express app | Accepted |
 | [0003](adr/0003-hosting-vercel-hobby.md) | Vercel Hobby, before and after launch | Accepted |
-| [0004](adr/0004-email-resend.md) | Send enquiry emails with Resend from buildwithshivam.in | Deciding |
-| [0005](adr/0005-typescript-6.md) | Pin TypeScript 6.0 | Deciding |
-| [0006](adr/0006-spam-and-rate-limiting.md) | Honeypot and a Vercel WAF rate-limit rule | Deciding |
-| [0007](adr/0007-analytics-vercel-web-analytics.md) | Page views from Vercel; contact actions counted from the messages | Deciding |
+| [0004](adr/0004-email-resend.md) | Send enquiry emails with Resend from buildwithshivam.in | Accepted |
+| [0005](adr/0005-typescript-6.md) | Pin TypeScript 6.0 | Accepted |
+| [0006](adr/0006-spam-and-rate-limiting.md) | Honeypot and a Vercel WAF rate-limit rule | Accepted |
+| [0007](adr/0007-analytics-vercel-web-analytics.md) | Page views from Vercel; contact actions counted from the messages | Accepted |
 
 Still to decide, each at the milestone named: the alerting tool (M6), the security header set (M2), the browser-side validation approach (M2), where `API_ORIGIN` lives locally (M0), and the initial-JavaScript budget (after the spike).

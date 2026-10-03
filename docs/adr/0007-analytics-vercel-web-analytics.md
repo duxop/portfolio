@@ -1,11 +1,11 @@
 ---
 id: 0007
 title: Page views from Vercel Web Analytics, contact actions counted from the messages
-status: deciding
+status: accepted
 date: 2026-10-03
 needed-by: M2
 reversibility: easy
-decided-by:
+decided-by: shivam
 ---
 
 ## Context
@@ -49,7 +49,7 @@ Option 1. It meets FR-15 and G2 at ₹0, and it measures conversations rather th
 
 ## Decision
 
-Pending your review.
+Option 1, as recommended (2026-10-03).
 
 ## Consequences
 

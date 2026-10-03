@@ -1,11 +1,11 @@
 ---
 id: 0005
 title: Pin TypeScript 6.0 across the repo
-status: deciding
+status: accepted
 date: 2026-10-03
 needed-by: M0
 reversibility: easy
-decided-by:
+decided-by: shivam
 ---
 
 ## Context
@@ -43,7 +43,7 @@ Option 1. It's the only option every tool in the stack supports today.
 
 ## Decision
 
-Pending your review.
+Option 1, as recommended (2026-10-03).
 
 ## Consequences
 

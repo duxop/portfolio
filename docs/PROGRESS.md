@@ -38,7 +38,9 @@
   - **Domain:** buildwithshivam.in is already owned, so it only needs verifying with Resend before M2.
   - **Launch:** launch waits for everything, so the project scenes are back to M5 and launch is M6 (PRD Q5 reversed, A5 withdrawn).
   - Hobby has no custom analytics events, so contact actions are counted from the messages' prefilled text (ADR 0007, PRD FR-9, FR-15).
+- PR #1 merged (`d3fb25f`): the settings lock now denies GitHub writes (PR create/merge/close, repo create/edit/rename/archive/delete) and allows read-only `gh`. Tested live both ways. The eight deny lines were given to me on my request, as a one-off exception to the "I write the code" rule.
+- ADRs 0004–0007 accepted as recommended: Resend; TypeScript 6.0.3; honeypot plus a Vercel WAF rule; Vercel page views plus counting messages by hand.
 
-**Next:** PR #1 (`chore/settings-lock`), then a docs PR with the PRD, the architecture doc and the ADRs. Then I review the architecture doc and decide ADRs 0004–0007. Then `UI_DESIGN.md`.
+**Next:** I review `ARCHITECTURE.md` on PR #2 (`docs/planning`), approve it, and merge. Then `UI_DESIGN.md`.
 
 **Open questions:** none new. The open questions in brief §11 now each name the doc that answers them.
