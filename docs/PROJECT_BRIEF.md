@@ -57,7 +57,7 @@ This repo is public, so the crusher client's figures stay out of it until the ow
 - [ ] A quote from one clinic
 - [ ] Screen recordings of both products with dummy data (no real patient or customer data)
 - [ ] One "before" artefact: a photo or recreation of the old Excel sheet
-- [ ] My name, photo, short bio, contact number, email, domain name
+- [ ] My name, photo, short bio, contact number, email (domain: buildwithshivam.in, owned)
 - [ ] The workflow map for each project (the steps of the real-world process I modelled)
 
 ## 5. Visual direction
@@ -89,7 +89,7 @@ This repo is public, so the crusher client's figures stay out of it until the ow
 | Smooth scroll | Lenis |
 | UI micro-motion | Motion |
 | Repo, tickets, CI | GitHub (public repo): Issues and milestones, Actions |
-| Hosting | Vercel: a preview URL per PR, production from `main` |
+| Hosting | Vercel Hobby (ADR 0003), two projects (web, api); a preview URL per PR, production from `main` on buildwithshivam.in |
 
 Use the latest stable versions at install time and check that React Three Fiber supports the installed React version before the 3D spike (stage 5).
 
@@ -97,7 +97,7 @@ Use the latest stable versions at install time and check that React Three Fiber 
 
 The project runs the way a product team runs one: decide what and why, design how, plan, build the pipeline, retire the biggest risk, then build in milestones. Each stage has an output and an exit check. Do not start a stage until the previous one passes.
 
-**Roles:** I write every line of code and every planning doc. Claude drafts tickets, reviews every doc and pull request, and keeps `CLAUDE.md`, this brief and `docs/PROGRESS.md` current. It gives the goal, the spec, the docs links and pointers to my own crusher and clinicXpert work, never the code or the doc itself. TypeScript is learned as each step needs it. See `CLAUDE.md`.
+**Roles:** I write every line of code, and I decide and approve. Claude writes the planning docs after we plan each one in conversation, drafts tickets, reviews every pull request, and keeps `CLAUDE.md`, this brief and `docs/PROGRESS.md` current. For code it gives the goal, the spec, the docs links and pointers to my own crusher and clinicXpert work, never the code itself. TypeScript is learned as each step needs it. See `CLAUDE.md`.
 
 **Left out on purpose**, because they solve team problems a solo project does not have: sprints, standups, story points, CODEOWNERS, multiple reviewers, and a separate staging environment (Vercel previews do that job).
 
@@ -143,10 +143,10 @@ Each ticket goes issue → branch → steps → PR → CI and preview → review
 - **M2 The 2D site:** layout, all six sections, responsive from 360px up, real content, a working contact path. *Exit:* I would be comfortable sending this link to a client even with no animation.
 - **M3 Motion:** Lenis, ScrollTrigger reveals, number count-ups, pinned case-study sections, reduced-motion fallbacks. *Exit:* scroll feels smooth on a mid-range Android phone.
 - **M4 Hero 3D:** the hero from primitives only (flat-shaded icosahedrons as rocks, planes as spreadsheet cells, boxes as dashboard blocks), tied to scroll, built on the spike's result. *Exit:* the Raw → Refined transition works end to end with no Blender models.
-- **M5 Project scenes:** the crusher plant and the clinic scene, modelled in Blender or adapted from free packs, exported as glTF, compressed, lazy-loaded. *Exit:* both scenes run and each model set stays inside the budget in §8.
+- **M5 Project scenes:** the crusher plant and the clinic scene, modelled in Blender or adapted from free packs, exported as glTF, compressed, lazy-loaded. The launch waits for them (PRD Q5). *Exit:* both scenes run, and each model set stays inside the budget in §8.
 
 **Stage 7: M6 Launch readiness**
-A pre-launch checklist (reference: `../crusher/docs/PRE_LAUNCH_CHECKLIST.md`): performance on a real low-end phone, static fallback for weak devices, accessibility pass, security, SEO and social preview, analytics and error tracking, sign-off from both clients on every number and quote, custom domain. Then a go/no-go, a soft launch to two or three people, fixes, and the public launch.
+A pre-launch checklist (reference: `../crusher/docs/PRE_LAUNCH_CHECKLIST.md`): performance on a real low-end phone, static fallback for weak devices, accessibility pass, security, SEO and social preview, analytics and error tracking, sign-off from both clients on every number and quote, buildwithshivam.in pointed at production. Then a go/no-go, a soft launch to two or three people, fixes, and the public launch.
 *Exit:* budget met on a real low-end phone; every checklist item done or knowingly deferred.
 
 **Stage 8: Post-launch**
@@ -163,7 +163,7 @@ Two to four weeks after launch: measure against the PRD's success metrics, write
 
 ## 9. Cautions
 
-- One excellent 3D scene beats five average ones. The hero is the priority; project scenes can ship later.
+- One excellent 3D scene beats five average ones. The hero is the priority; the project scenes come after it (M5), and the launch waits for them (PRD Q5).
 - The 3D earns attention; the case studies win the client. Never let animation delay or hide the content.
 - No real client data in screenshots or recordings.
 - No guarantees in the copy. Results, with context.
@@ -182,11 +182,11 @@ I do the rest by hand:
 
 Each is answered in the place in brackets.
 
-- Is the audience mainly business owners, or also agencies and employers? (PRD)
-- Domain name? (M6)
-- English only, or English and Hindi? (PRD)
-- Do I show pricing or a "how an engagement works" section? (PRD)
+- Is the audience mainly business owners, or also agencies and employers? (PRD) Answered: business owners only.
+- Domain name? Answered: buildwithshivam.in.
+- English only, or English and Hindi? (PRD) Answered: English only.
+- Do I show pricing or a "how an engagement works" section? (PRD) Answered: how it works, no prices.
 - Which headline? (M1)
-- Where does `apps/api` run in production (Vercel functions, Render, Railway, a small VPS)? (ADR, stage 2)
-- What does the API do first: an enquiry form that emails me, stores enquiries, or both? (PRD)
+- Where does `apps/api` run in production (Vercel functions, Render, Railway, a small VPS)? (ADR, stage 2) Answered: Vercel (ADR 0003).
+- What does the API do first: an enquiry form that emails me, stores enquiries, or both? (PRD) Answered: emails me, stores nothing.
 - Once the course method has run smoothly through a milestone or two, turn it into a publishable skill for project-based learning with AI. (Post-launch)

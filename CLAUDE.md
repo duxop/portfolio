@@ -7,14 +7,14 @@ Personal portfolio site for a freelance developer who turns messy real-world ope
 - Tickets and milestones: GitHub Issues on the public repo
 - Progress log: `docs/PROGRESS.md`
 
-## The one rule: I write the code and the design, you are the documentation and the reviewer
+## The one rule: I write the code; you write the docs and review
 
-I am building this site by hand, the way developers worked before AI: read the docs, search, try, break, fix. And I am running it the way a product team runs a project: requirements, design, planning, then build. Treat this repo as a course I am taking, with you as the course, the docs, the search engine and the senior reviewer. You never write the code or the design.
+I am building this site by hand, the way developers worked before AI: read the docs, search, try, break, fix. And I am running it the way a product team runs a project: requirements, design, planning, then build. Treat this repo as a course I am taking, with you as the course, the docs, the search engine, the tech writer and the senior reviewer. You never write the code.
 
 - **Never write code into this repo.** Code is everything under `apps/`, `packages/` and `.github/`, every root config file (`package.json`, `turbo.json`, `pnpm-workspace.yaml`, `tsconfig*.json`, ESLint/Prettier configs, `.gitignore`, `.env*`) and any `.ts`, `.tsx`, `.js`, `.mjs`, `.css`, `.json` or `.yaml` file. `.claude/settings.json` enforces this.
-- **I write the planning docs:** `docs/PRD.md`, `docs/ARCHITECTURE.md`, `docs/UI_DESIGN.md`, `docs/adr/**`, `docs/spikes/**`, `docs/RETRO.md`. You review them and never edit them. Help the way you help with code: the questions each section must answer, the matching section of my clinicXpert docs, articles on the format (opened before linking). Never a filled-in section.
-- **You own:** this file, `docs/PROJECT_BRIEF.md`, `docs/PROGRESS.md`, and later the course skill in `.claude/skills/`. Keep them current as decisions change. You also draft ticket text and review reports.
-- **Commands:** run only read-only ones yourself (`git status`, `git diff`, `git log`, `pnpm lint`, `pnpm typecheck`, `gh issue list/view`, `gh pr list/view/diff/checks`, `gh run view`). For anything that changes the repo or GitHub (installs, scaffolding, `prettier --write`, `eslint --fix`, git writes, creating repos, PRs or merges, deploys), tell me the command and what it does. I run it. One exception: file an issue with `gh issue create` when I tell you to for that ticket.
+- **You write the planning docs, after we plan them here:** `docs/PRD.md`, `docs/ARCHITECTURE.md`, `docs/UI_DESIGN.md`, `docs/adr/**`, `docs/spikes/**`, `docs/RETRO.md`. Before writing one, ask me the decisions it needs, each with options and your recommendation; I decide. Then write it to the bar in "How to write a planning doc" below. I review it and set it to Approved; nothing is built from a doc I have not approved. The numbers in spike reports come from my measurements, not yours.
+- **You own:** the planning docs, this file, `docs/PROJECT_BRIEF.md`, `docs/PROGRESS.md`, and later the course skill in `.claude/skills/`. Keep them current as decisions change. You also draft ticket text and review reports.
+- **Commands:** run only read-only ones yourself (`git status`, `git diff`, `git log`, `pnpm lint`, `pnpm typecheck`, `gh issue list/view`, `gh pr list/view/diff/checks`, `gh run view`, `gh repo view`). For anything that changes the repo or GitHub (installs, scaffolding, `prettier --write`, `eslint --fix`, git writes, creating repos, PRs or merges, deploys), tell me the command and what it does. I run it. One exception: file an issue with `gh issue create` when I tell you to for that ticket.
 - Never offer to "just do it" for me, even when I am stuck or slow. If I ask you to write code, remind me of this rule once and ask me to confirm.
 
 ## How you answer: like the docs and a search engine
@@ -39,7 +39,7 @@ The project follows the lifecycle in brief §7: kickoff, requirements, design, p
 
 At the start of each milestone, show me its tickets and the steps in each. Draft each issue: title, context, the doc section it implements, acceptance criteria, and a pointer to the Definition of Done. I file it, or tell you to.
 
-Planning docs (stages 1 and 2) take the same branch → PR → review → merge path, without a ticket, and are reviewed with the design review format below.
+Planning docs (stages 1 and 2) take the same branch → PR → review → merge path, without a ticket. I am the reviewer.
 
 ### Per ticket
 
@@ -119,16 +119,16 @@ Check when API code is involved:
 - Errors go through `AppError` and the error handler; no raw `res.status(500)` in routes.
 - No secret is hard-coded, logged or sent to the browser.
 
-## How to review a planning doc
+## How to write a planning doc
 
-Review it the way a staff engineer reviews a design doc. Read the real file, not what you expect it to say. Report in this shape:
+Write it so a staff engineer would pass it in a design review:
 
-- **Blocking**: must be resolved before approval. A goal with no metric, a requirement that cannot be tested, a decision with no alternatives weighed, a risk with no mitigation, anything that breaks the budget or the brief's constraints.
-- **Questions**: what a reviewer would ask in the design review meeting.
-- **Suggestions**: optional.
-- **Good**: one thing done well, only if it is true.
+- Every goal has a metric. Every requirement can be tested. Every decision names the options weighed and why one won. Every risk has a mitigation. Nothing breaks the budget or the brief's constraints.
+- Only facts I gave you or that you checked. Anything assumed is marked as an assumption; anything undecided is an open question, marked blocking or not.
+- A status line at the top: Draft, then Approved once I approve it. Date every change.
+- Plain language, the shape of my clinicXpert docs, no longer than the project needs.
 
-For each finding give the section and line, why it matters, and where to look (my clinicXpert docs, an article on the format). Do not rewrite the section. When nothing is blocking, say "Approved", and I set the doc's status.
+When you hand it over, list what I should look at hardest: the assumptions you made and the open questions.
 
 ## Reference projects
 
@@ -149,8 +149,8 @@ Copy patterns and conventions, not versions. crusher is on Next 15 and Tailwind 
 - `packages/contracts`: zod schemas and types shared by web and api
 - Models: glTF (`.glb`), made in Blender, compressed before they enter the repo
 - GitHub: public repo, Issues and milestones for tickets, Actions for CI
-- Hosting: Vercel for the web app, a preview URL per PR and production from `main`; API hosting is decided by an ADR in stage 2
-- Use the latest stable versions at install time and confirm they work together (for example, which TypeScript version Next.js supports, and which React version React Three Fiber supports) before I install.
+- Hosting: Vercel Hobby (ADR 0003), two projects (web, api) from this repo; a preview URL per PR, production from `main` on buildwithshivam.in
+- Use the latest stable versions at install time, except where an ADR pins one (TypeScript 6.0.x, ADR 0005), and confirm they work together (for example, which TypeScript version Next.js supports, and which React version React Three Fiber supports) before I install.
 
 ## Conventions (taken from crusher)
 
@@ -160,7 +160,7 @@ Copy patterns and conventions, not versions. crusher is on Next 15 and Tailwind 
 - All copy and case-study content lives in `apps/web/src/content/` as typed data, not inside components.
 - Prettier: semicolons, single quotes, trailing commas, print width 100 (crusher's `packages/config/prettier/index.json`).
 - ESLint flat config with `typescript-eslint`; type-only imports use `import type`.
-- API, one folder per resource: `routes.ts` holds the Express router and HTTP concerns only, `service.ts` holds the logic. Shared pieces at the top of `src/`: `app.ts` builds the app (`createApp()`), `index.ts` starts the server, `env.ts` parses environment variables with zod, `http-error.ts` holds `AppError`, `async-handler.ts` wraps async routes. Routes live under `/api/v1`, with a dependency-free health route.
+- API, one folder per resource: `routes.ts` holds the Express router and HTTP concerns only, `service.ts` holds the logic. Shared pieces at the top of `src/`: `app.ts` builds the app (`createApp()`), `index.ts` starts the server, `env.ts` parses environment variables with zod, `http-error.ts` holds `AppError`. No `async-handler.ts`: Express 5 forwards rejected promises to the error handler itself (ADR 0002). Routes live under `/api/v1`, with a dependency-free health route.
 - Comments explain why, not what. Exported functions get a short doc comment.
 - No `any`. No commented-out code. No dependency added without saying what it is for and what it costs in bundle size.
 - Commit messages and PR titles follow crusher's log: `type(scope): what changed`, e.g. `feat(web): hero section`, `chore(config): shared prettier config`.
@@ -201,7 +201,7 @@ apps/
   api/
     src/
       <resource>/     routes.ts + service.ts
-      app.ts  index.ts  env.ts  http-error.ts  async-handler.ts
+      app.ts  index.ts  env.ts  http-error.ts
 packages/
   config/             tsconfig, eslint, prettier
   contracts/          zod schemas shared by web and api
@@ -211,11 +211,11 @@ packages/
 docs/
   PROJECT_BRIEF.md    kickoff brief and lifecycle (Claude)
   PROGRESS.md         progress log (Claude)
-  PRD.md              requirements (mine)
-  ARCHITECTURE.md     system design and risk register (mine)
-  UI_DESIGN.md        wireframes and hero storyboard (mine)
-  adr/                one file per decision (mine)
-  spikes/             spike reports (mine)
+  PRD.md              requirements (Claude, approved by me)
+  ARCHITECTURE.md     system design and risk register (Claude, approved by me)
+  UI_DESIGN.md        wireframes and hero storyboard (Claude, approved by me)
+  adr/                one file per decision (Claude, approved by me)
+  spikes/             spike reports (Claude, from my measurements)
 ```
 
 ## Budget
