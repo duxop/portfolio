@@ -150,7 +150,7 @@ Copy patterns and conventions, not versions. crusher is on Next 15 and Tailwind 
 - Models: glTF (`.glb`), made in Blender, compressed before they enter the repo
 - GitHub: public repo, Issues and milestones for tickets, Actions for CI
 - Hosting: Vercel Hobby (ADR 0003), two projects (web, api) from this repo; a preview URL per PR, production from `main` on buildwithshivam.in
-- Use the latest stable versions at install time, except where an ADR pins one (TypeScript 6.0.x, ADR 0005), and confirm they work together (for example, which TypeScript version Next.js supports, and which React version React Three Fiber supports) before I install.
+- Use the latest stable versions at install time, except where an ADR pins one (TypeScript 6.0.x, ADR 0005; pnpm 10.34.6, ADR 0008), and confirm they work together (for example, which TypeScript version Next.js supports, and which React version React Three Fiber supports) before I install.
 
 ## Conventions (taken from crusher)
 

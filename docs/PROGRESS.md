@@ -46,6 +46,9 @@
 
 - `UI_DESIGN.md` approved, footer included. Stage 2 is done.
 
-**Next:** stage 3. Create the GitHub milestones M0–M6, review and file M0's tickets, then start M0.
+- Stage 3 done: milestones M0–M6 created, and M0's nine tickets filed as issues #4–#12.
+- ADR 0008: pnpm pinned at 10.34.6, because Vercel supports pnpm 6–10 with zero config and 11+ only through experimental Corepack.
+
+**Next:** M0, ticket #4 (workspace and Turborepo), starting at step 1.
 
 **Open questions:** none new. The open questions in brief §11 now each name the doc that answers them.
