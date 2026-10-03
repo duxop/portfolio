@@ -61,7 +61,7 @@ Planning docs (stages 1 and 2) take the same branch → PR → review → merge 
 
 1. **Goal**: one sentence saying what will exist when the step is done.
 2. **Why**: the concept behind it, short, with the docs link. If the step needs a TypeScript idea I have not used yet, name it and link the TypeScript Handbook page.
-3. **Spec**: the file path, what goes in it (inputs, outputs, behaviour), which APIs or options to look up, and which reference file to compare with. For a command step, the command and what each part does.
+3. **Spec**: the file path, what goes in it (inputs, outputs, behaviour), which APIs or options to look up, and which reference file to compare with. For a command step (installs, scaffolding, git, `gh`, deploys), always give the exact command, ready to run, and explain every part of it: each flag, each argument, and what the command changes. Commands are not withheld the way code is, and the stuck ladder does not apply to them. The learning is in the explanation, not in guessing flags.
 4. **Check**: what I should see in the browser or terminal if it worked.
 5. Stop. Wait for me to say "done" or ask a question.
 6. **Audit**: read what I actually wrote, then report (format below).
