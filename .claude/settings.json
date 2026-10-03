@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "allow": [
+      "Bash(pnpm lint)",
+      "Bash(pnpm typecheck)",
+      "Bash(git status*)",
+      "Bash(git diff*)",
+      "Bash(git log*)"
+    ],
+    "deny": [
+      "Edit(/apps/**)",
+      "Edit(/packages/**)",
+      "Edit(/**/*.ts)",
+      "Edit(/**/*.tsx)",
+      "Edit(/**/*.js)",
+      "Edit(/**/*.mjs)",
+      "Edit(/**/*.cjs)",
+      "Edit(/**/*.css)",
+      "Edit(/**/*.json)",
+      "Edit(/**/*.yaml)",
+      "Edit(/**/*.yml)",
+      "Edit(/**/.gitignore)",
+      "Edit(/**/.npmrc)",
+      "Edit(/**/.env*)",
+      "Edit(/**/.prettier*)",
+      "Bash(pnpm add *)",
+      "Bash(pnpm i)",
+      "Bash(pnpm i *)",
+      "Bash(pnpm install*)",
+      "Bash(pnpm remove *)",
+      "Bash(pnpm update*)",
+      "Bash(pnpm dlx *)",
+      "Bash(pnpm create *)",
+      "Bash(pnpm format*)",
+      "Bash(npm install*)",
+      "Bash(npm i *)",
+      "Bash(npx *)",
+      "Bash(*prettier --write*)",
+      "Bash(*eslint*--fix*)",
+      "Bash(git add *)",
+      "Bash(git commit*)",
+      "Bash(git push*)",
+      "Bash(git merge*)",
+      "Bash(vercel *)"
+    ]
+  }
+}
