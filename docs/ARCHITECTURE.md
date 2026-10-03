@@ -37,7 +37,7 @@ There is no database and nothing is stored (PRD §5). There are two deployables,
 | `packages/contracts` (`@portfolio/contracts`) | The enquiry schema (zod) and its inferred types | — | A library, imported by both apps |
 | `packages/config` (`@portfolio/config`) | Shared tsconfig, ESLint and Prettier config | — | Dev-time only |
 
-Layout and tooling: ADR 0001. Why the API is separate: ADR 0002. Versions: the latest stable releases at install time, except TypeScript, which is pinned to 6.0.x (ADR 0005). On 2026-10-03, npm's latest versions were: next 16.3.8, react 19.3.0, express 5.2.1, zod 4.6.5, tailwindcss 4.3.3, turbo 2.11.7, eslint 10.12.0, typescript-eslint 8.71.0. Re-check them at install.
+Layout and tooling: ADR 0001. Why the API is separate: ADR 0002. Versions: the latest stable releases at install time, except TypeScript, pinned to 6.0.x (ADR 0005), and pnpm, pinned to 10.34.6 (ADR 0008). Node is 22 LTS. On 2026-10-03, npm's latest versions were: next 16.3.8, react 19.3.0, express 5.2.1, zod 4.6.5, tailwindcss 4.3.3, turbo 2.11.7, eslint 10.12.0, typescript-eslint 8.71.0. Re-check them at install.
 
 Version differences from crusher worth knowing before the API work:
 
@@ -227,5 +227,6 @@ Crusher's API tests (`../crusher/apps/api/tests`) are the reference for the supe
 | [0005](adr/0005-typescript-6.md) | Pin TypeScript 6.0 | Accepted |
 | [0006](adr/0006-spam-and-rate-limiting.md) | Honeypot and a Vercel WAF rate-limit rule | Accepted |
 | [0007](adr/0007-analytics-vercel-web-analytics.md) | Page views from Vercel; contact actions counted from the messages | Accepted |
+| [0008](adr/0008-pnpm-10.md) | Pin pnpm 10.34.6 with the `packageManager` field | Accepted |
 
 Still to decide, each at the milestone named: the alerting tool (M6), the security header set (M2), the browser-side validation approach (M2), where `API_ORIGIN` lives locally (M0), and the initial-JavaScript budget (after the spike).
