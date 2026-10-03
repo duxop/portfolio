@@ -2,7 +2,7 @@
 
 How the portfolio site is built and run. This is the engineering half of the design; [`PRD.md`](PRD.md) is the product half, and the ADRs in [`adr/`](adr/) carry the reasoning. Where this file and a newer ADR disagree, the ADR wins.
 
-**Status: Draft**, 2026-10-03. Written by Claude; approved by me before M0 starts. Facts about third-party services carry the date the docs were checked.
+**Status: Approved**, 2026-10-03. Written by Claude, approved by me. Facts about third-party services carry the date the docs were checked.
 
 ---
 

@@ -41,6 +41,11 @@
 - PR #1 merged (`d3fb25f`): the settings lock now denies GitHub writes (PR create/merge/close, repo create/edit/rename/archive/delete) and allows read-only `gh`. Tested live both ways. The eight deny lines were given to me on my request, as a one-off exception to the "I write the code" rule.
 - ADRs 0004–0007 accepted as recommended: Resend; TypeScript 6.0.3; honeypot plus a Vercel WAF rule; Vercel page views plus counting messages by hand.
 
-**Next:** I review `ARCHITECTURE.md` on PR #2 (`docs/planning`), approve it, and merge. Then `UI_DESIGN.md`.
+- PR #2 merged (`dafb381`): the PRD, the architecture doc, and ADRs 0001–0007. `ARCHITECTURE.md` approved.
+- `UI_DESIGN.md` drafted. Decided: a slim sticky header; my photo and bio in Contact; the hero pinned for about one screen of scroll. Both contrast failures are fixed without new tokens: form borders use `stone-400`, and orange buttons have dark text.
+
+- `UI_DESIGN.md` approved, footer included. Stage 2 is done.
+
+**Next:** stage 3. Create the GitHub milestones M0–M6, review and file M0's tickets, then start M0.
 
 **Open questions:** none new. The open questions in brief §11 now each name the doc that answers them.
