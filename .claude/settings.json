@@ -6,7 +6,15 @@
       "Bash(pnpm typecheck)",
       "Bash(git status*)",
       "Bash(git diff*)",
-      "Bash(git log*)"
+      "Bash(git log*)",
+      "Bash(gh issue list*)",
+      "Bash(gh issue view*)",
+      "Bash(gh pr list*)",
+      "Bash(gh pr view*)",
+      "Bash(gh pr diff*)",
+      "Bash(gh pr checks*)",
+      "Bash(gh run view*)",
+      "Bash(gh repo view*)"
     ],
     "deny": [
       "Edit(/apps/**)",
@@ -24,6 +32,7 @@
       "Edit(/**/.npmrc)",
       "Edit(/**/.env*)",
       "Edit(/**/.prettier*)",
+      "Edit(/.github/**)",
       "Bash(pnpm add *)",
       "Bash(pnpm i)",
       "Bash(pnpm i *)",
@@ -42,7 +51,15 @@
       "Bash(git commit*)",
       "Bash(git push*)",
       "Bash(git merge*)",
-      "Bash(vercel *)"
+      "Bash(vercel *)",
+      "Bash(gh pr create *)",
+      "Bash(gh pr merge *)",
+      "Bash(gh pr close *)",
+      "Bash(gh repo create *)",
+      "Bash(gh repo edit *)",
+      "Bash(gh repo rename *)",
+      "Bash(gh repo archive *)",
+      "Bash(gh repo delete *)"
     ]
   }
 }
