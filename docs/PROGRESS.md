@@ -22,12 +22,23 @@
 
 **Decided:**
 - The project runs like a product team's: kickoff → requirements (PRD) → design (architecture, ADRs, UI design) → planning (milestones, tickets) → M0 foundation → 3D spike → build milestones M1–M5 → M6 launch readiness → post-launch.
-- I write the planning docs (`PRD.md`, `ARCHITECTURE.md`, `UI_DESIGN.md`, ADRs, spike reports); Claude reviews them like a design review and never edits them.
+- Claude writes the planning docs (`PRD.md`, `ARCHITECTURE.md`, `UI_DESIGN.md`, ADRs, spike reports) after we plan each one in conversation; I decide, review and approve. (First set as "I write, Claude reviews", changed the same day.) I still write all the code.
 - Tickets are GitHub Issues under milestones. One ticket = one branch = one PR; one step = one commit. Merge on GitHub with "Create a merge commit".
 - The repo is public.
 - In M0 the pipeline comes before features: CI on every PR and Vercel previews come before tokens, fonts and the API.
 - The 3D spike moves from the start of the old Phase 4 to right after M0, measured on a real phone.
 
-**Next:** finish step 0, create the public GitHub repo and push `main` (stage 0). Then stage 1: the PRD.
+- Stage 0 done: `.gitignore` and the first commit (`4451e78`), public repo `duxop/portfolio` (the old one is archived as `portfolio-v1`). The crusher figures were held back from the brief before the push, pending the owner's permission.
+- PRD approved, with Q2–Q5 as proposed: WhatsApp → form → email; the FR-10 fields; the NFR-3 browsers; launch without the project scenes. So launch is renumbered M5, and the project scenes become M6, after launch.
+
+- Stage 2 drafted: `ARCHITECTURE.md` and ADRs 0001–0007. Hosting is Vercel, Hobby while building and Pro from launch (decided; ask Vercel support before the M0 deploy). Research findings that changed the plan: Vercel Hobby excludes commercial use; typescript-eslint doesn't support TypeScript 7 yet (pin 6.0.3); Resend needs a verified domain, so the domain moves from M5 to M2; Express 5 needs no async wrapper.
+
+- Later the same day, three changes:
+  - **Hosting:** Vercel Hobby before and after launch, the owner's call. There is no Pro upgrade and no support email. ADR 0003 was rewritten.
+  - **Domain:** buildwithshivam.in is already owned, so it only needs verifying with Resend before M2.
+  - **Launch:** launch waits for everything, so the project scenes are back to M5 and launch is M6 (PRD Q5 reversed, A5 withdrawn).
+  - Hobby has no custom analytics events, so contact actions are counted from the messages' prefilled text (ADR 0007, PRD FR-9, FR-15).
+
+**Next:** PR #1 (`chore/settings-lock`), then a docs PR with the PRD, the architecture doc and the ADRs. Then I review the architecture doc and decide ADRs 0004–0007. Then `UI_DESIGN.md`.
 
 **Open questions:** none new. The open questions in brief §11 now each name the doc that answers them.
