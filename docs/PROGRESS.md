@@ -5,6 +5,7 @@
 **Built:** nothing yet. Claude rewrote `CLAUDE.md` for the "Claude is the docs, I write the code" method, added `.claude/settings.json` to lock code and config files, and updated the brief.
 
 **Decided:**
+
 - Monorepo laid out like crusher: pnpm workspaces + Turborepo, `packages/config`, `packages/contracts`.
 - Current versions, not crusher's: Next 16 and Tailwind 4 (clinicXpert's `apps/site` is the reference for the Tailwind 4 setup).
 - `apps/api` (Express, crusher style) from Phase 0, not later.
@@ -21,6 +22,7 @@
 **Built:** nothing yet. `git init` done; step 0 (root `.gitignore`, first commit) in progress. Claude rewrote brief §7 as a lifecycle and updated `CLAUDE.md` to match.
 
 **Decided:**
+
 - The project runs like a product team's: kickoff → requirements (PRD) → design (architecture, ADRs, UI design) → planning (milestones, tickets) → M0 foundation → 3D spike → build milestones M1–M5 → M6 launch readiness → post-launch.
 - Claude writes the planning docs (`PRD.md`, `ARCHITECTURE.md`, `UI_DESIGN.md`, ADRs, spike reports) after we plan each one in conversation; I decide, review and approve. (First set as "I write, Claude reviews", changed the same day.) I still write all the code.
 - Tickets are GitHub Issues under milestones. One ticket = one branch = one PR; one step = one commit. Merge on GitHub with "Create a merge commit".

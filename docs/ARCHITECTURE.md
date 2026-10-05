@@ -30,12 +30,12 @@ There is no database and nothing is stored (PRD §5). There are two deployables,
 
 ## 2. Monorepo map
 
-| Package | Job | Depends on | Runs as |
-|---|---|---|---|
-| `apps/web` (`@portfolio/web`) | The page: content, layout, motion, 3D, the form | `contracts`, `config` | Vercel project `web`; prerendered at build |
-| `apps/api` (`@portfolio/api`) | `GET /api/v1/health`, `POST /api/v1/enquiries` | `contracts`, `config` | Vercel project `api`; one Vercel Function |
-| `packages/contracts` (`@portfolio/contracts`) | The enquiry schema (zod) and its inferred types | — | A library, imported by both apps |
-| `packages/config` (`@portfolio/config`) | Shared tsconfig, ESLint and Prettier config | — | Dev-time only |
+| Package                                       | Job                                             | Depends on            | Runs as                                    |
+| --------------------------------------------- | ----------------------------------------------- | --------------------- | ------------------------------------------ |
+| `apps/web` (`@portfolio/web`)                 | The page: content, layout, motion, 3D, the form | `contracts`, `config` | Vercel project `web`; prerendered at build |
+| `apps/api` (`@portfolio/api`)                 | `GET /api/v1/health`, `POST /api/v1/enquiries`  | `contracts`, `config` | Vercel project `api`; one Vercel Function  |
+| `packages/contracts` (`@portfolio/contracts`) | The enquiry schema (zod) and its inferred types | —                     | A library, imported by both apps           |
+| `packages/config` (`@portfolio/config`)       | Shared tsconfig, ESLint and Prettier config     | —                     | Dev-time only                              |
 
 Layout and tooling: ADR 0001. Why the API is separate: ADR 0002. Versions: the latest stable releases at install time, except TypeScript, pinned to 6.0.x (ADR 0005), and pnpm, pinned to 10.34.6 (ADR 0008). Node is 22 LTS. On 2026-10-03, npm's latest versions were: next 16.3.8, react 19.3.0, express 5.2.1, zod 4.6.5, tailwindcss 4.3.3, turbo 2.11.7, eslint 10.12.0, typescript-eslint 8.71.0. Re-check them at install.
 
@@ -47,6 +47,7 @@ Version differences from crusher worth knowing before the API work:
   - wildcard routes need a name.
 
   See the [Express 5 migration guide](https://expressjs.com/en/guide/migrating-5.html).
+
 - **zod 4:**
   - `z.email()` replaces `z.string().email()`;
   - an `error` param replaces `message`;
@@ -102,26 +103,26 @@ The page has no request-time data. All copy lives in typed files under `apps/web
 
 Request body (JSON):
 
-| Field | Rule |
-|---|---|
-| `name` | Required, 1–100 characters, trimmed |
-| `phone` | Optional, a phone number in a loose format |
-| `email` | Optional, a valid email |
-| (both) | At least one of `phone` or `email` |
-| `message` | Required, 1–2,000 characters |
-| `business` | Optional, ≤ 100 characters |
-| `website` | The honeypot. Must be empty or absent |
+| Field      | Rule                                       |
+| ---------- | ------------------------------------------ |
+| `name`     | Required, 1–100 characters, trimmed        |
+| `phone`    | Optional, a phone number in a loose format |
+| `email`    | Optional, a valid email                    |
+| (both)     | At least one of `phone` or `email`         |
+| `message`  | Required, 1–2,000 characters               |
+| `business` | Optional, ≤ 100 characters                 |
+| `website`  | The honeypot. Must be empty or absent      |
 
 The lengths and the phone format are proposals, finalised in the contracts ticket.
 
-| Response | When | Body |
-|---|---|---|
-| `202` | Sent, or a honeypot hit | none |
-| `400 BAD_REQUEST` | Malformed JSON, or a body over the limit | error envelope |
-| `422 VALIDATION_ERROR` | The schema failed | error envelope, with field errors in `details` |
-| `429` | The WAF limit was hit | Vercel's default |
-| `502 UPSTREAM_FAILED` | The email could not be sent | error envelope |
-| `500 INTERNAL` | Anything unexpected | error envelope, with no internals |
+| Response               | When                                     | Body                                           |
+| ---------------------- | ---------------------------------------- | ---------------------------------------------- |
+| `202`                  | Sent, or a honeypot hit                  | none                                           |
+| `400 BAD_REQUEST`      | Malformed JSON, or a body over the limit | error envelope                                 |
+| `422 VALIDATION_ERROR` | The schema failed                        | error envelope, with field errors in `details` |
+| `429`                  | The WAF limit was hit                    | Vercel's default                               |
+| `502 UPSTREAM_FAILED`  | The email could not be sent              | error envelope                                 |
+| `500 INTERNAL`         | Anything unexpected                      | error envelope, with no internals              |
 
 The error envelope follows crusher's (`../crusher/apps/api/src/middleware/error-handler.ts`): `{ "error": { "code", "message", "details"? } }`. `AppError` follows `../crusher/apps/api/src/http-error.ts`, trimmed to the four codes above plus `NOT_FOUND`, and adds `UPSTREAM_FAILED → 502`.
 
@@ -139,6 +140,7 @@ Each item maps to PRD NFR-5.
   - action: 429.
 
   The window and limit are proposals, tuned at M2.
+
 - **Secrets:** `RESEND_API_KEY` exists only in the `api` project's environment, never in `apps/web`, the repo, or a log. `env.ts` parses every variable with zod at startup and fails fast.
 - **Headers:** standard security headers on both projects: `helmet` on the API, as in crusher, and the `headers` option in `next.config` on the web. The exact set is decided at M2.
 - **Logs (NFR-6):** never a message body, name, phone or email. Each log line carries a request ID, the outcome, the duration, and whether the honeypot was hit.
@@ -146,13 +148,13 @@ Each item maps to PRD NFR-5.
 
 ## 6. Environments and configuration
 
-| | Local | Preview (every PR) | Production (`main`) |
-|---|---|---|---|
-| Web | `next dev` on :3000 | `web` preview URL | `web` production on buildwithshivam.in |
-| API | `tsx watch` on :4000 | `api` preview URL | `api` production |
-| How web finds the API | `API_ORIGIN` (see below) | Related Projects: the matching `api` preview | Related Projects: `api` production |
-| Email goes to | Resend test address, or my inbox when testing by hand | My inbox, subject marked with the environment | My inbox |
-| Vercel plan | — | Hobby (ADR 0003) | Hobby (ADR 0003) |
+|                       | Local                                                 | Preview (every PR)                            | Production (`main`)                    |
+| --------------------- | ----------------------------------------------------- | --------------------------------------------- | -------------------------------------- |
+| Web                   | `next dev` on :3000                                   | `web` preview URL                             | `web` production on buildwithshivam.in |
+| API                   | `tsx watch` on :4000                                  | `api` preview URL                             | `api` production                       |
+| How web finds the API | `API_ORIGIN` (see below)                              | Related Projects: the matching `api` preview  | Related Projects: `api` production     |
+| Email goes to         | Resend test address, or my inbox when testing by hand | My inbox, subject marked with the environment | My inbox                               |
+| Vercel plan           | —                                                     | Hobby (ADR 0003)                              | Hobby (ADR 0003)                       |
 
 **Related Projects** ([Vercel: Using Monorepos](https://vercel.com/docs/monorepos), 2026-08-11):
 
@@ -166,14 +168,14 @@ Each item maps to PRD NFR-5.
 
 **Variables**
 
-| Variable | Where | Secret | Purpose |
-|---|---|---|---|
-| `RESEND_API_KEY` | api | Yes | Send email (ADR 0004) |
-| `ENQUIRY_TO` | api | No | My inbox |
-| `ENQUIRY_FROM` | api | No | Sender address, e.g. `enquiries@buildwithshivam.in` |
-| `PORT` | api, local only | No | Defaults to 4000 |
-| `API_ORIGIN` | web, local only | No | Rewrite destination when Related Projects is absent |
-| `VERCEL_RELATED_PROJECTS` | web, set by Vercel | No | Rewrite destination on Vercel |
+| Variable                  | Where              | Secret | Purpose                                             |
+| ------------------------- | ------------------ | ------ | --------------------------------------------------- |
+| `RESEND_API_KEY`          | api                | Yes    | Send email (ADR 0004)                               |
+| `ENQUIRY_TO`              | api                | No     | My inbox                                            |
+| `ENQUIRY_FROM`            | api                | No     | Sender address, e.g. `enquiries@buildwithshivam.in` |
+| `PORT`                    | api, local only    | No     | Defaults to 4000                                    |
+| `API_ORIGIN`              | web, local only    | No     | Rewrite destination when Related Projects is absent |
+| `VERCEL_RELATED_PROJECTS` | web, set by Vercel | No     | Rewrite destination on Vercel                       |
 
 Resend sends only from a verified domain, so buildwithshivam.in is verified with Resend before the M2 form ticket (ADR 0004).
 
@@ -195,38 +197,38 @@ Resend sends only from a verified domain, so buildwithshivam.in is verified with
 
 Tests ship with the code (brief §7) and run in CI.
 
-| Package | Tool | What |
-|---|---|---|
-| `contracts` | Vitest | The schema accepts a valid enquiry; rejects a missing name, a message that's too long, and neither phone nor email; treats a filled honeypot as a separate case |
-| `api` | Vitest + supertest on `createApp()` | Health is 200. A valid enquiry is 202 and calls the sender once with the right fields. Invalid is 422 with field errors. Malformed JSON is 400. The honeypot gives 202 with no send. A sender failure is 502. Logs never contain the message body. The sender is a fake passed into the app, so tests never send email |
-| `web` | Playwright smoke test (from M2) | The page renders the headline. The contact links have the right `href`s. The form shows success and failure with the API mocked. An axe accessibility check runs on the page |
+| Package     | Tool                                | What                                                                                                                                                                                                                                                                                                                   |
+| ----------- | ----------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `contracts` | Vitest                              | The schema accepts a valid enquiry; rejects a missing name, a message that's too long, and neither phone nor email; treats a filled honeypot as a separate case                                                                                                                                                        |
+| `api`       | Vitest + supertest on `createApp()` | Health is 200. A valid enquiry is 202 and calls the sender once with the right fields. Invalid is 422 with field errors. Malformed JSON is 400. The honeypot gives 202 with no send. A sender failure is 502. Logs never contain the message body. The sender is a fake passed into the app, so tests never send email |
+| `web`       | Playwright smoke test (from M2)     | The page renders the headline. The contact links have the right `href`s. The form shows success and failure with the API mocked. An axe accessibility check runs on the page                                                                                                                                           |
 
 Crusher's API tests (`../crusher/apps/api/tests`) are the reference for the supertest setup.
 
 ## 10. Risks
 
-| # | Risk | Impact | Mitigation | When |
-|---|---|---|---|---|
-| R1 | The hero scene is too heavy for a mid-range Android phone | Fails G3 and G5 | The spike measures it on a real phone first. The static image is always the fallback. ADR from the spike | Stage 5 |
-| R2 | The crusher client doesn't approve the figures | A weaker case study | Qualitative version ready (PRD §8) | M1 |
-| R3 | Bots post directly to the API's `*.vercel.app` URL, skipping the web project's WAF rule | Spam; Resend's cap used up | Honeypot. A WAF rule on the `api` project too. Check what IP the API sees behind the proxy | M2 |
-| R4 | Vercel picks the wrong Express entry file | The API deploy fails or serves nothing | Check on the first deploy; rename `src/app.ts` if needed | M0 |
-| R5 | A spam flood exhausts Resend's 100-a-day cap | Real enquiries fail that day | R3's mitigations. The failure state offers WhatsApp and email. Alerting (FR-12) | M2, M6 |
-| R6 | Vercel applies its non-commercial clause to the site | Projects paused until upgraded or moved | Owner's call, handled if it happens. Nothing in the code is tied to Hobby (ADR 0003) | — |
-| R7 | Learning pace stretches the schedule | Late launch | Milestones ship on their own. M2 is already a site worth sending | Ongoing |
-| R8 | A free tier or price changes | Cost or a feature lost | ADRs record dates and revisit triggers | Ongoing |
+| #   | Risk                                                                                    | Impact                                  | Mitigation                                                                                               | When    |
+| --- | --------------------------------------------------------------------------------------- | --------------------------------------- | -------------------------------------------------------------------------------------------------------- | ------- |
+| R1  | The hero scene is too heavy for a mid-range Android phone                               | Fails G3 and G5                         | The spike measures it on a real phone first. The static image is always the fallback. ADR from the spike | Stage 5 |
+| R2  | The crusher client doesn't approve the figures                                          | A weaker case study                     | Qualitative version ready (PRD §8)                                                                       | M1      |
+| R3  | Bots post directly to the API's `*.vercel.app` URL, skipping the web project's WAF rule | Spam; Resend's cap used up              | Honeypot. A WAF rule on the `api` project too. Check what IP the API sees behind the proxy               | M2      |
+| R4  | Vercel picks the wrong Express entry file                                               | The API deploy fails or serves nothing  | Check on the first deploy; rename `src/app.ts` if needed                                                 | M0      |
+| R5  | A spam flood exhausts Resend's 100-a-day cap                                            | Real enquiries fail that day            | R3's mitigations. The failure state offers WhatsApp and email. Alerting (FR-12)                          | M2, M6  |
+| R6  | Vercel applies its non-commercial clause to the site                                    | Projects paused until upgraded or moved | Owner's call, handled if it happens. Nothing in the code is tied to Hobby (ADR 0003)                     | —       |
+| R7  | Learning pace stretches the schedule                                                    | Late launch                             | Milestones ship on their own. M2 is already a site worth sending                                         | Ongoing |
+| R8  | A free tier or price changes                                                            | Cost or a feature lost                  | ADRs record dates and revisit triggers                                                                   | Ongoing |
 
 ## 11. Decision index
 
-| ADR | Decision | Status |
-|---|---|---|
-| [0001](adr/0001-monorepo-pnpm-turborepo.md) | Monorepo on pnpm workspaces and Turborepo | Accepted |
-| [0002](adr/0002-separate-express-api.md) | The enquiry endpoint lives in a separate Express app | Accepted |
-| [0003](adr/0003-hosting-vercel-hobby.md) | Vercel Hobby, before and after launch | Accepted |
-| [0004](adr/0004-email-resend.md) | Send enquiry emails with Resend from buildwithshivam.in | Accepted |
-| [0005](adr/0005-typescript-6.md) | Pin TypeScript 6.0 | Accepted |
-| [0006](adr/0006-spam-and-rate-limiting.md) | Honeypot and a Vercel WAF rate-limit rule | Accepted |
+| ADR                                                | Decision                                                          | Status   |
+| -------------------------------------------------- | ----------------------------------------------------------------- | -------- |
+| [0001](adr/0001-monorepo-pnpm-turborepo.md)        | Monorepo on pnpm workspaces and Turborepo                         | Accepted |
+| [0002](adr/0002-separate-express-api.md)           | The enquiry endpoint lives in a separate Express app              | Accepted |
+| [0003](adr/0003-hosting-vercel-hobby.md)           | Vercel Hobby, before and after launch                             | Accepted |
+| [0004](adr/0004-email-resend.md)                   | Send enquiry emails with Resend from buildwithshivam.in           | Accepted |
+| [0005](adr/0005-typescript-6.md)                   | Pin TypeScript 6.0                                                | Accepted |
+| [0006](adr/0006-spam-and-rate-limiting.md)         | Honeypot and a Vercel WAF rate-limit rule                         | Accepted |
 | [0007](adr/0007-analytics-vercel-web-analytics.md) | Page views from Vercel; contact actions counted from the messages | Accepted |
-| [0008](adr/0008-pnpm-10.md) | Pin pnpm 10.34.6 with the `packageManager` field | Accepted |
+| [0008](adr/0008-pnpm-10.md)                        | Pin pnpm 10.34.6 with the `packageManager` field                  | Accepted |
 
 Still to decide, each at the milestone named: the alerting tool (M6), the security header set (M2), the browser-side validation approach (M2), where `API_ORIGIN` lives locally (M0), and the initial-JavaScript budget (after the spike).
