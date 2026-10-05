@@ -171,15 +171,15 @@ Copy patterns and conventions, not versions. crusher is on Next 15 and Tailwind 
 
 Define once in the Tailwind theme (Tailwind 4: an `@theme` block in CSS) and use everywhere.
 
-| Token | Value | Use |
-|---|---|---|
-| `basalt-950` | `#0B0C0E` | page background |
-| `basalt-900` | `#131519` | raised surfaces |
-| `stone-600` | `#5B6068` | borders, muted shapes |
-| `stone-400` | `#9AA0A8` | secondary text |
-| `stone-100` | `#E7E5E0` | primary text |
-| `signal` | `#FF6A13` | the single accent |
-| `clinic` | `#19B5A5` | ClinicXpert section only |
+| Token        | Value     | Use                      |
+| ------------ | --------- | ------------------------ |
+| `basalt-950` | `#0B0C0E` | page background          |
+| `basalt-900` | `#131519` | raised surfaces          |
+| `stone-600`  | `#5B6068` | borders, muted shapes    |
+| `stone-400`  | `#9AA0A8` | secondary text           |
+| `stone-100`  | `#E7E5E0` | primary text             |
+| `signal`     | `#FF6A13` | the single accent        |
+| `clinic`     | `#19B5A5` | ClinicXpert section only |
 
 Fonts: Barlow Condensed (headings), Inter (body), JetBrains Mono (numbers and data). Load them with `next/font`.
 
