@@ -47,7 +47,7 @@ Option 1, as recommended (2026-10-03).
 
 ## Consequences
 
-- The root `package.json` pins `typescript` at 6.0.x. Packages use the root's copy, not their own.
+- The root `package.json` pins `typescript` at 6.0.3. A package that needs TypeScript itself (`apps/web`, for `next build`) declares the same exact version, so pnpm links the one copy.
 - The "Using TypeScript 7" section of the Next.js docs does not apply.
 - `CLAUDE.md`'s "latest stable versions" rule has this one exception.
 
