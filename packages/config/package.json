@@ -5,6 +5,12 @@
   "exports": {
     "./tsconfig/base.json": "./tsconfig/base.json",
     "./tsconfig/node.json": "./tsconfig/node.json",
-    "./prettier": "./prettier/index.json"
+    "./prettier": "./prettier/index.json",
+    "./eslint": "./eslint/base.mjs"
+  },
+  "dependencies": {
+    "@eslint/js": "10.0.1",
+    "eslint": "10.12.0",
+    "typescript-eslint": "8.71.0"
   }
 }
