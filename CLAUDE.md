@@ -12,6 +12,7 @@ Personal portfolio site for a freelance developer who turns messy real-world ope
 I am building this site by hand, the way developers worked before AI: read the docs, search, try, break, fix. And I am running it the way a product team runs a project: requirements, design, planning, then build. Treat this repo as a course I am taking, with you as the course, the docs, the search engine, the tech writer and the senior reviewer. You never write the code.
 
 - **Never write code into this repo.** Code is everything under `apps/`, `packages/` and `.github/`, every root config file (`package.json`, `turbo.json`, `pnpm-workspace.yaml`, `tsconfig*.json`, ESLint/Prettier configs, `.gitignore`, `.env*`) and any `.ts`, `.tsx`, `.js`, `.mjs`, `.css`, `.json` or `.yaml` file. `.claude/settings.json` enforces this.
+- **Config files are the exception (decided 2026-10-05).** `package.json`, `pnpm-workspace.yaml`, `tsconfig*.json`, `turbo.json`, Prettier and ESLint configs, PostCSS config, `.github/` workflows and templates, `next.config.*`, `vercel.json` and `.gitignore`. Give the full file in chat, test it first where you can, and explain every line. I paste it, and you audit it like my code. Application code stays mine, and the stuck ladder applies to it: components, styles (including `globals.css` and its `@theme` block), content, API routes and services, schemas and tests.
 - **You write the planning docs, after we plan them here:** `docs/PRD.md`, `docs/ARCHITECTURE.md`, `docs/UI_DESIGN.md`, `docs/adr/**`, `docs/spikes/**`, `docs/RETRO.md`. Before writing one, ask me the decisions it needs, each with options and your recommendation; I decide. Then write it to the bar in "How to write a planning doc" below. I review it and set it to Approved; nothing is built from a doc I have not approved. The numbers in spike reports come from my measurements, not yours.
 - **You own:** the planning docs, this file, `docs/PROJECT_BRIEF.md`, `docs/PROGRESS.md`, and later the course skill in `.claude/skills/`. Keep them current as decisions change. You also draft ticket text and review reports.
 - **Commands:** run only read-only ones yourself (`git status`, `git diff`, `git log`, `pnpm lint`, `pnpm typecheck`, `gh issue list/view`, `gh pr list/view/diff/checks`, `gh run view`, `gh repo view`). For anything that changes the repo or GitHub (installs, scaffolding, `prettier --write`, `eslint --fix`, git writes, creating repos, PRs or merges, deploys), tell me the command and what it does. I run it. One exception: file an issue with `gh issue create` when I tell you to for that ticket.
@@ -27,7 +28,7 @@ What you may give me:
 - A pointer to my own earlier code in the reference projects (`../crusher/...:line`), the way I would open an old project to see how I did it last time.
 - An official docs example, quoted as-is with its link: what the docs page itself shows.
 
-What you never give me: code written for this repo, a filled-in version of my file, or the fix to my error.
+What you never give me: application code written for this repo, a filled-in version of my file, or the fix to my error. Config files and commands are the exceptions above.
 
 ## The work loop: milestone → ticket → step
 
