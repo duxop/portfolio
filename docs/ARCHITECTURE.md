@@ -189,7 +189,14 @@ Resend sends only from a verified domain, so buildwithshivam.in is verified with
 ## 8. CI/CD
 
 - **On every PR:** GitHub Actions runs `pnpm install --frozen-lockfile`, then `lint`, `typecheck`, `build` and `test` through Turborepo. Reference: `../clinicXpert/.github/workflows/ci.yml`.
-- **Merging:** `main` accepts only PRs with green CI, merged with a merge commit (`CLAUDE.md`). Which branch-protection features the free plan allows on a public repo is checked at the M0 CI ticket.
+- **Merging:** `main` accepts only PRs with green CI, merged with a merge commit (`CLAUDE.md`). Enforced by a repository ruleset named `main` (rulesets are available on this free public repo; checked 2026-10-07). It targets the default branch, has no bypass actors, and holds four rules:
+  - restrict deletions;
+  - block force pushes;
+  - require a pull request, with 0 approvals (one developer) and merge commits as the only allowed method;
+  - require the `ci` check from GitHub Actions (app id 15368). The branch doesn't have to be up to date with `main`, because CI runs again on `main` after every merge.
+
+  Repo settings: squash and rebase merging are off, and head branches are deleted on merge.
+
 - **Deploys:** Vercel builds a preview of each affected project for every push to a PR, and deploys production from `main`. Projects a commit doesn't touch are skipped automatically when workspace dependencies are declared (ADR 0001).
 - **Entry file (risk R4):** Vercel finds the Express entry by looking for a file that imports `express`, at `app.*`, `index.*` or `server.*`, at the root or in `src/` ([Express on Vercel](https://vercel.com/docs/frameworks/backend/express), 2026-08-10). Crusher's layout has both `src/app.ts` (which builds the app) and `src/index.ts` (which listens). The first API deploy (M0) checks which one Vercel picks; renaming `app.ts` removes the ambiguity if needed.
 
