@@ -156,6 +156,8 @@ Each item maps to PRD NFR-5.
 | Email goes to         | Resend test address, or my inbox when testing by hand | My inbox, subject marked with the environment | My inbox                               |
 | Vercel plan           | —                                                     | Hobby (ADR 0003)                              | Hobby (ADR 0003)                       |
 
+**Vercel projects** (created 2026-10-07): this doc calls them `web` and `api` by role. In Vercel, the web project is named `portfolio` (root `apps/web`), with the production domain `portfolio-nine-chi-kvitgiuopr.vercel.app` until buildwithshivam.in points at it in M6. The API project is named at ticket #11. Standard Deployment Protection is on: preview and per-deployment URLs require a Vercel login, and production domains stay public.
+
 **Related Projects** ([Vercel: Using Monorepos](https://vercel.com/docs/monorepos), 2026-08-11):
 
 - `apps/web/vercel.json` lists the `api` project's ID.
