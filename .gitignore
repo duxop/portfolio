@@ -29,3 +29,8 @@ pnpm-debug.log*
 !.vscode/extensions.json
 
 /.serena
+
+# next.js and vercel
+next-env.d.ts
+.vercel
+*.pem
