@@ -54,3 +54,24 @@
 **Next:** M0, ticket #4 (workspace and Turborepo), starting at step 1.
 
 **Open questions:** none new. The open questions in brief §11 now each name the doc that answers them.
+
+## 2026-10-08: Visual design and two themes
+
+**Built:**
+
+- M0 tickets #4–#8 merged: the workspace, shared config, the Next.js app, CI with a `main` ruleset, and the Vercel project `portfolio` (production at portfolio-nine-chi-kvitgiuopr.vercel.app).
+- Ticket #9 (tokens and fonts) is paused on `feat/9-tokens-fonts`, waiting for the visual design.
+
+**Decided:**
+
+- **Stage 2b:** a high-fidelity visual design on a Claude design canvas before more UI code: https://claude.ai/artifact/7Apk46w4uQHykactJcTyZA
+- **Two themes, each telling one project's story.** Dark is the crusher (basalt and orange). Light is the clinic (white and teal: a chaotic reception becomes an orderly system).
+- **Theme rules:** the first visit follows the device setting. A toggle with crusher and clinic icons sits in the header.
+- **3D:** one 3D scene per theme, in the hero only. The case studies use still images. The 3D is designed as storyboards before any code.
+- **Contrast:** teal and orange both fail as text on white, so the light theme adds `clinic-700` `#0E7C71` for links and focus, and `signal-700` `#B5470F` for errors and crusher accents.
+
+**Approved** the same day: the visual design and the two-theme revision of `UI_DESIGN.md`, with dark background B (warm brown-black: `basalt-950` `#15120F`, `basalt-900` `#1E1A16`, `stone-600` `#5E574F`, `stone-400` `#A39C93`).
+
+**Next session, in order:** Claude updates `CLAUDE.md`'s token table (B's values and the four light tokens), then amends the PRD (hero scenes, a theme-toggle requirement, the case-study stills), ARCHITECTURE (theme set before paint; one scene loaded per theme), adds an ADR on how themes are built, and updates issue #9's criteria. Then #9 resumes.
+
+**Open questions:** the Node and pnpm lines from Vercel's build log (ADR 0008's assumption is still unverified).

@@ -121,6 +121,10 @@ _Exit:_ reviewed and Approved; no blocking question left open.
 
 _Exit:_ all three reviewed and Approved.
 
+**Stage 2b: Visual design** (added 2026-10-08, during M0)
+A high-fidelity mockup of `UI_DESIGN.md` on a design canvas: every section at 360 and 1280 px, a style board, the headline options, the hero storyboard, the form states. Claude builds it, I review and approve. M0's design-token ticket (#9) waits for it; the other M0 tickets do not.
+_Exit:_ I approve the visual design, and `UI_DESIGN.md` and `CLAUDE.md` are updated from it.
+
 **Stage 3: Planning**
 GitHub milestones M0–M6 (below). M0's tickets filed, each with acceptance criteria and a link to the doc section it implements; later milestones are ticketed when they start. The Definition of Done lives in `CLAUDE.md`.
 _Exit:_ M0's tickets are filed.

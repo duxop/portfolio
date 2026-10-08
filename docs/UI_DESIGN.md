@@ -4,6 +4,16 @@ How the page looks and behaves: the principles, the visual system, a low-fi wire
 
 **Status: Approved**, 2026-10-03. Written by Claude, approved by me, including the footer (U5). Decided on 2026-10-03: a slim sticky header, my photo and bio in Contact, and a hero pinned for about one screen of scroll. Sizes marked _proposal_ get tuned in the browser at M2.
 
+**Revision: Approved**, 2026-10-08. Two themes, each telling one project's Raw → Refined story: dark is the crusher, light is the clinic (§1, §3.1, §3.4, §4.0, §4.3, §5, §6). The hero gets one 3D scene per theme, and the case studies use still images. Decided on 2026-10-08: two themes; the first visit follows the device's setting; two hero scenes only; the 3D is designed as storyboards before any code; dark background B, warm brown-black (U7). Approved the same day.
+
+**Visual design: Approved**, 2026-10-08. A high-fidelity mockup of this document, on a Claude design canvas (private to me): https://claude.ai/artifact/7Apk46w4uQHykactJcTyZA. It has 24 artboards:
+
+- **Dark (crusher):** the page at 1280 and 360 px, and a style board.
+- **Light (clinic):** the page at 1280 px, the hero at 360 px, and a style board.
+- **Shared:** the theme toggle in both states, the three headline options, both 3D storyboards (three frames each), the form's invalid, sending, sent and failed states, the 404, and three dark-background options.
+
+All copy on it is draft; bracketed values are placeholders. Once approved, it replaces the _proposal_ sizes here, and any token it adds or changes goes into `CLAUDE.md`.
+
 ---
 
 ## 1. Principles
@@ -11,9 +21,9 @@ How the page looks and behaves: the principles, the visual system, a low-fi wire
 - **Content first.** Every section is complete as HTML text. Motion and 3D add to a section and never carry meaning on their own (PRD §1, NFR-4).
 - **Phone first.** 360 px is the design target and desktop is the enhancement, because most visitors arrive on a phone (PRD A1). This is the opposite of clinicXpert, where desktop is the product.
 - **Visible by default.** Content's starting CSS state is its final, visible state. JavaScript sets an element's "from" state only after it has loaded, and only when reduced motion is off. If JavaScript fails or is slow, nothing stays hidden.
-- **One accent.** `signal` marks action and focus: buttons, links and the focus ring. `clinic` teal appears only in the ClinicXpert section.
+- **One accent per theme.** In the dark theme, `signal` orange marks action and focus: buttons, links and the focus ring. In the light theme, `clinic` teal does the same job. Each case study keeps its own project colour for its eyebrow, workflow chips and image accents, in a shade that passes contrast on that theme (§3.1).
 - **Every state is designed.** Default, hover, focus-visible and active for every control. Idle, sending, sent, invalid and failed for the form.
-- **Dark only.** The site has one theme, "a quarry at dusk" (brief §5). There's no light theme and no toggle.
+- **Two themes, two stories.** Dark is the crusher: "a quarry at dusk" (brief §5), basalt and orange, rocks becoming a dashboard. Light is the clinic: white and teal, a chaotic reception becoming an orderly system. The layout, type and copy are the same in both. Only the colours and the hero scene change. The first visit follows the device's light or dark setting; the toggle in the header overrides it and is remembered. The theme is set before the page paints, so there's no flash of the wrong theme.
 
 ## 2. Responsive target
 
@@ -47,7 +57,27 @@ The token values are in `CLAUDE.md`. The pairings come from the contrast check i
 | Focus ring                                    | 2 px `signal` outline, 2 px offset        | 6.82 on 950, 6.37 on 900                                     |
 | ClinicXpert accents                           | `clinic`                                  | 7.64 on 950. Dark text on a teal fill (7.64)                 |
 
-The table resolves both contrast failures from NFR-2, and the design needs no new tokens.
+The dark table resolves both contrast failures from NFR-2, with no new tokens.
+
+**Light theme (clinic)**, proposed 2026-10-08. Contrast was computed with the WCAG relative-luminance formula. Four new tokens: `chalk-50`, `chalk-200`, `clinic-700` and `signal-700`.
+
+| Element                         | Colour                                                          | Contrast                                                        |
+| ------------------------------- | --------------------------------------------------------------- | --------------------------------------------------------------- |
+| Page background                 | `chalk-50` `#F6F8F7`                                            | —                                                               |
+| Raised surface (form, sections) | white `#FFFFFF`                                                 | —                                                               |
+| Body text                       | `basalt-900`                                                    | 17.14 on chalk-50                                               |
+| Secondary text, labels          | `stone-600`                                                     | 5.93 on chalk-50, 6.33 on white                                 |
+| Form field borders              | `stone-600`                                                     | 6.33 on white                                                   |
+| Decorative dividers             | `chalk-200` `#D3DAD8`                                           | Exempt: they don't identify a control                           |
+| Primary button                  | `clinic` fill, **`basalt-950` text**                            | 7.64. Never white on teal (2.56 fails)                          |
+| Secondary button                | `stone-600` border, `basalt-900` text                           | 6.33                                                            |
+| Text links, focus ring          | `clinic-700` `#0E7C71`, links always underlined                 | 4.76 on chalk-50, 5.07 on white                                 |
+| Errors, crusher accents         | `signal-700` `#B5470F`                                          | 5.08 on chalk-50, 5.42 on white                                 |
+| Never                           | `clinic` or `signal` as text on a light background (2.56, 2.87) | They are fills and illustration colours only in the light theme |
+
+**Errors in the dark theme** use `signal` (6.82), with a 2 px border and text, so colour is never the only cue. The design has no red.
+
+**Dark background: B, warm brown-black** (U7, decided 2026-10-08). It changes four token values, with the names kept: `basalt-950` `#15120F`, `basalt-900` `#1E1A16`, `stone-600` `#5E574F`, `stone-400` `#A39C93`. The contrast ratios with these values: body text 14.82; secondary 6.87 (6.37 on surfaces, so field borders still pass); `signal` 6.51; dark text on `signal` 6.51; `clinic` 7.28. In the light theme: body text 16.21, secondary 6.67, field borders 7.11. The ratios in the tables above were computed with the earlier values; every pair still passes with B's. The canvas uses B everywhere except the three comparison boards. `CLAUDE.md`'s token table is updated next session.
 
 ### 3.2 Type
 
@@ -61,7 +91,7 @@ The table resolves both contrast failures from NFR-2, and the design needs no ne
 | Small print (captions, form hints)    | Inter            | 400                       | 0.875rem                                            |
 | Proof numbers, data, durations        | JetBrains Mono   | 500                       | 2.5rem → 3.5rem, tabular figures                    |
 
-All three fonts load through `next/font` with the Latin subset, and only the weights listed. Each weight is another file in the 2.5 s budget.
+All three fonts load through `next/font` with the Latin subset. Inter and JetBrains Mono are variable fonts: one file each covers every weight, so no weight is listed for them. Barlow Condensed is not variable, so it loads only 600 and 700, one file per weight. Every font file counts against the 2.5 s budget (checked in `next/font`'s font data, 2026-10-07).
 
 ### 3.3 Spacing and shape
 
@@ -74,14 +104,15 @@ All three fonts load through `next/font` with the Latin subset, and only the wei
 
 These are the pieces each section is built from. Each one is a file in `components/ui/`, one component per file, kebab-case (`CLAUDE.md`).
 
-| Primitive                     | Variants and states                                                                                             |
-| ----------------------------- | --------------------------------------------------------------------------------------------------------------- |
-| `Button` (a link or a button) | Primary, secondary. Hover, focus-visible, active. On the form's submit: disabled while sending                  |
-| `TextLink`                    | Inline, or standalone with an ↗ for an external link (with "opens in a new tab" text for screen readers)        |
-| `SectionHeading`              | Eyebrow plus h2, with an id for the section's `aria-labelledby`                                                 |
-| `Stat`                        | Number (mono) plus label. Count-up from M3                                                                      |
-| `Field`                       | Label, input or textarea, hint, error. Invalid state: `aria-invalid`, error text linked with `aria-describedby` |
-| `Disclosure`                  | A native `<details>`/`<summary>`, for "Under the hood"                                                          |
+| Primitive                     | Variants and states                                                                                                                                                             |
+| ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Button` (a link or a button) | Primary, secondary. Hover, focus-visible, active. On the form's submit: disabled while sending                                                                                  |
+| `TextLink`                    | Inline, or standalone with an ↗ for an external link (with "opens in a new tab" text for screen readers)                                                                        |
+| `SectionHeading`              | Eyebrow plus h2, with an id for the section's `aria-labelledby`                                                                                                                 |
+| `Stat`                        | Number (mono) plus label. Count-up from M3                                                                                                                                      |
+| `Field`                       | Label, input or textarea, hint, error. Invalid state: `aria-invalid`, error text linked with `aria-describedby`                                                                 |
+| `Disclosure`                  | A native `<details>`/`<summary>`, for "Under the hood"                                                                                                                          |
+| `ThemeToggle`                 | Two icon buttons in a group: a crusher (dark) and a clinic cross (light). The current one is filled and `aria-pressed="true"`. Each has an `aria-label` ("Crusher theme, dark") |
 
 ### 3.5 Motion rules
 
@@ -103,13 +134,13 @@ These are low-fidelity wireframes: they fix order, grouping and hierarchy, not e
 ```
 360 px                                  1280 px
 ┌──────────────────────────────┐        ┌──────────────────────────────────────────────────────────┐
-│ Shivam Sangwan [Get in touch]│        │ Shivam Sangwan                              [Get in touch]│
+│ Shivam Sangwan [◪|✚][Get in…]│        │ Shivam Sangwan                       [◪|✚] [Get in touch]│
 └──────────────────────────────┘        └──────────────────────────────────────────────────────────┘
-  sticky, 48 px, basalt-950 at 90% opacity, a stone-600 hairline below
+  sticky, 48 px, the page colour at 90% opacity, a divider hairline below; [◪|✚] is the theme toggle
 ```
 
 - **Skip link:** "Skip to content" is the first focusable element. It's visually hidden until focused, then appears above the header (FR-2).
-- **Header:** my name, which is a link to the top, and "Get in touch", a secondary button that jumps to `#contact`. No other navigation: it's one page.
+- **Header:** my name (a link to the top), the theme toggle (§3.4), and "Get in touch", a secondary button that jumps to `#contact`. No other navigation: it's one page.
 - **Footer:** one line:
   - © year and my name;
   - the email link;
@@ -185,8 +216,9 @@ These are low-fidelity wireframes: they fix order, grouping and hierarchy, not e
 └──────────────────────────────┘
 ```
 
-- **Crusher (FR-6):** the plant scene (M5) fills the scene slot. Until M5, a still image fills it.
-- **ClinicXpert (FR-7):** the same layout, with `clinic` teal replacing `signal` for the eyebrow, the rules and the scene accents, and a "See it live ↗" link to https://app.clinicxpert.in/ under the outcome line. Its buttons stay `signal`: action is always orange.
+- **The image slot holds a still image, not 3D** (decided 2026-10-08): a frame of the matching hero scene. Both stills show in both themes, so a visitor in either theme sees both projects.
+- **Crusher (FR-6):** the eyebrow and chips use `signal` in the dark theme and `signal-700` in the light theme.
+- **ClinicXpert (FR-7):** the same layout, with `clinic` for the eyebrow (`clinic-700` in the light theme), the chips and the image accents, and a "See it live ↗" link to https://app.clinicxpert.in/ under the outcome line. Buttons always use the current theme's accent.
 - **Before and after** are real `<img>` elements with descriptive alt text, captioned "Before" and "After" in text, never in colour alone. Screenshots and recordings use dummy data only (NFR-6).
 - **"Under the hood"** is a native `<details>`: collapsed for owners, one click for developers, keyboard accessible with no JavaScript.
 
@@ -256,29 +288,79 @@ These are low-fidelity wireframes: they fix order, grouping and hierarchy, not e
 
 The honeypot field (ADR 0006) is hidden from sight and from screen readers, and skipped by keyboard focus.
 
-## 5. Hero storyboard
+## 5. Hero storyboards
 
 The hero holds still while the visitor scrolls one screen height. Over that distance, scroll progress runs from 0 to 1 and drives the scene. The movement is scrubbed, so scrolling back reverses it. The text never moves or changes: it's real HTML beside the canvas (or above it on a phone).
 
-| Progress         | The scene shows                                                                                                                                                                                                                       | On screen                                                                              |
-| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
-| Load (no scroll) | **Raw.** Flat-shaded rocks (icosahedrons in `stone-600` and `stone-400`), spreadsheet-cell planes and paper-challan planes, scattered and drifting slowly. A low-poly crusher in `basalt-900` with a `signal` edge sits at the centre | Eyebrow, headline, sub and button. All visible from the first paint, never animated in |
-| 0 → 0.35         | The drift stops, and the pieces start moving toward the crusher's mouth                                                                                                                                                               | Unchanged                                                                              |
-| 0.35 → 0.65      | **Through.** The pieces pass through the crusher, and uniform boxes come out the bottom, like graded material on a conveyor                                                                                                           | Unchanged                                                                              |
-| 0.65 → 0.90      | **Refined.** The boxes snap into rows and columns: a table, two bar charts and a stat card. One bar is `signal`                                                                                                                       | Unchanged                                                                              |
-| 0.90 → 1         | The dashboard settles. The pin releases                                                                                                                                                                                               | The proof strip scrolls in, and its numbers echo the dashboard's stat card             |
+There is one scene per theme (decided 2026-10-08). Only the current theme's scene loads. Switching themes swaps the static image at once, and loads the other scene only if the visitor stays on it. Both scenes share the same rules (below), the same timing, and the same look: low-poly, flat-shaded, few colours.
 
-**The static image.** It's used with reduced motion on, without WebGL, while the scene loads, if the scene fails, and in M2–M3 before the scene exists. It's one composed frame that tells the whole story left to right: raw pieces, the crusher, the refined dashboard. That way the meaning survives without motion.
+### 5.1 Dark: the crusher
 
-- **Alt text:** "Scattered rocks and spreadsheet cells pass through a crusher and come out as an ordered dashboard."
-- **Who makes it:** in M2 it's a simple SVG composition, and from M4 a render of the real scene.
+**Cast.**
+
+- Rocks: icosahedrons of a few sizes in `stone-600` and `stone-400`.
+- Spreadsheet-cell planes (outlined).
+- Paper-challan planes (`stone-100`, with ruled lines).
+- A low-poly crusher at the centre: a hopper with a `signal` edge over a jaw box.
+- A conveyor.
+- The dashboard parts: boxes that become a table, bars and a stat card. One bar is `signal`.
+
+**Light and camera.**
+
+- One warm key light from the upper left ("dusk"), plus a low cool fill.
+- No shadows beyond flat shading.
+- A fixed three-quarter camera with a slight push-in over the scroll.
+
+| Progress         | The scene shows                                                                                           | On screen                                                                              |
+| ---------------- | --------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| Load (no scroll) | **Raw.** Rocks, cells and challans scattered and drifting slowly around the idle crusher                  | Eyebrow, headline, sub and button. All visible from the first paint, never animated in |
+| 0 → 0.35         | The drift stops, and the pieces start moving toward the crusher's mouth                                   | Unchanged                                                                              |
+| 0.35 → 0.65      | **Through.** The pieces pass through the crusher, and uniform boxes come out the bottom onto the conveyor | Unchanged                                                                              |
+| 0.65 → 0.90      | **Refined.** The boxes snap into rows and columns: a table, a bar chart and a stat card                   | Unchanged                                                                              |
+| 0.90 → 1         | The dashboard settles. The pin releases                                                                   | The proof strip scrolls in                                                             |
+
+**Static image** alt text: "Scattered rocks and spreadsheet cells pass through a crusher and come out as an ordered dashboard."
+
+### 5.2 Light: the clinic
+
+**Cast.**
+
+- A reception desk with a `clinic` edge.
+- Low-poly people: a sphere head and a tapered body. Staff are `clinic`; patients are `stone-400` and `stone-600`.
+- Paper sheets and files (white, with teal rules).
+- A row of waiting chairs.
+- A wall screen (`basalt-900`) that becomes a queue display: "Now serving" with a `clinic` number, and the queue as rows.
+
+**Light and camera.**
+
+- Bright, even light from above (a clinic's ceiling light), and a soft fill.
+- The same camera as the crusher scene, so the two read as a pair.
+
+| Progress         | The scene shows                                                                                                                        | On screen |
+| ---------------- | -------------------------------------------------------------------------------------------------------------------------------------- | --------- |
+| Load (no scroll) | **Chaos.** Papers flutter in the air, people hurry with files at odd angles, chairs sit out of line, and the wall screen is blank      | As 5.1    |
+| 0 → 0.35         | The papers slow and turn toward the wall screen; the people slow down                                                                  | Unchanged |
+| 0.35 → 0.65      | **Gathering.** The papers stream into the screen and become its rows; the people turn toward the desk                                  | Unchanged |
+| 0.65 → 0.90      | **Ordered.** The chairs line up and the patients sit with token numbers; the desk keeps one tidy stack; the screen shows "Now serving" | Unchanged |
+| 0.90 → 1         | The room settles. The pin releases                                                                                                     | As 5.1    |
+
+**Static image** alt text: "A busy clinic reception, papers flying and people rushing, turns into an orderly waiting room with a queue screen."
+
+### 5.3 Rules for both scenes
+
+**The static image.**
+
+- **When it shows:** with reduced motion on, without WebGL, while the scene loads, if the scene fails, and in M2–M3 before the scenes exist.
+- **What it is:** one composed frame per theme that tells the whole story from left to right, chaos to order. That way the meaning survives without motion.
+- **Who makes it:** in M2, a simple SVG composition, as on the canvas. From M4 onward, a render of the real scene.
 
 **Other rules:**
 
 - The canvas is `aria-hidden`; its meaning is in the image's alt text and the headline.
-- If the visitor never scrolls, only the slow drift plays, and it pauses when the tab is hidden.
-- Pixel ratio is capped (NFR-1).
+- If the visitor never scrolls, only the slow idle motion plays (drift, or fluttering papers), and it pauses when the tab is hidden.
+- Pixel ratio is capped (NFR-1). Only one scene is ever in memory.
 - The pin uses the small-viewport height unit, so a phone's collapsing address bar doesn't make it jump. Checked at M4.
+- The 3D spike (stage 5) builds the crusher scene first. Its frame-rate result applies to both scenes, since they share a camera, a light count and the size of the cast.
 
 ## 6. Accessibility checklist
 
@@ -291,6 +373,7 @@ This applies the PRD's WCAG 2.2 AA requirement (NFR-2) to this design. The M6 ac
 - Contrast pairs only from §3.1.
 - Images: real content gets descriptive alt text. Decorative images get `alt=""`. Every canvas is `aria-hidden`, with its meaning in text.
 - The form follows §4.5's states.
+- The theme toggle is a group of two real buttons with `aria-pressed` and `aria-label`, reachable by keyboard, and both themes pass §3.1's contrast table.
 - Reduced motion follows §3.5's list.
 - External links say they open a new tab.
 
@@ -317,3 +400,4 @@ M1 writes this content as typed data in `apps/web/src/content/`. The fields each
 | U4  | The reply time promised in the form's sent message            | M1                      |
 | U5  | The footer as proposed in §4.0?                               | Decided 2026-10-03: yes |
 | U6  | Type scale and spacing marked _proposal_: tune in the browser | M2                      |
+| U7  | Dark background: A, B or C (§3.1)                             | Decided 2026-10-08: B   |
