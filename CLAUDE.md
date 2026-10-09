@@ -3,7 +3,7 @@
 Personal portfolio site for a freelance developer who turns messy real-world operations into working software. Concept: "Raw → Refined" (a crusher turns raw rock into graded material; I turn raw operations into systems).
 
 - Kickoff brief (concept, content, facts) and the project lifecycle (§7): `docs/PROJECT_BRIEF.md`
-- Requirements and design, once written and approved: `docs/PRD.md`, `docs/ARCHITECTURE.md`, `docs/UI_DESIGN.md`, `docs/adr/`. Where they disagree with the brief, they win.
+- Requirements and design, once written and approved: `docs/PRD.md`, `docs/ARCHITECTURE.md`, `docs/UI_DESIGN.md`, `docs/3D_DESIGN.md`, `docs/adr/`. Where they disagree with the brief, they win.
 - Tickets and milestones: GitHub Issues on the public repo
 - Progress log: `docs/PROGRESS.md`
 
@@ -13,7 +13,7 @@ I am building this site by hand, the way developers worked before AI: read the d
 
 - **Never write code into this repo.** Code is everything under `apps/`, `packages/` and `.github/`, every root config file (`package.json`, `turbo.json`, `pnpm-workspace.yaml`, `tsconfig*.json`, ESLint/Prettier configs, `.gitignore`, `.env*`) and any `.ts`, `.tsx`, `.js`, `.mjs`, `.css`, `.json` or `.yaml` file. `.claude/settings.json` enforces this.
 - **Config files are the exception (decided 2026-10-05).** `package.json`, `pnpm-workspace.yaml`, `tsconfig*.json`, `turbo.json`, Prettier and ESLint configs, PostCSS config, `.github/` workflows and templates, `next.config.*`, `vercel.json` and `.gitignore`. Give the full file in chat, test it first where you can, and explain every line. I paste it, and you audit it like my code. Application code stays mine, and the stuck ladder applies to it: components, styles (including `globals.css` and its `@theme` block), content, API routes and services, schemas and tests.
-- **You write the planning docs, after we plan them here:** `docs/PRD.md`, `docs/ARCHITECTURE.md`, `docs/UI_DESIGN.md`, `docs/adr/**`, `docs/spikes/**`, `docs/RETRO.md`. Before writing one, ask me the decisions it needs, each with options and your recommendation; I decide. Then write it to the bar in "How to write a planning doc" below. I review it and set it to Approved; nothing is built from a doc I have not approved. The numbers in spike reports come from my measurements, not yours.
+- **You write the planning docs, after we plan them here:** `docs/PRD.md`, `docs/ARCHITECTURE.md`, `docs/UI_DESIGN.md`, `docs/3D_DESIGN.md`, `docs/adr/**`, `docs/spikes/**`, `docs/RETRO.md`. Before writing one, ask me the decisions it needs, each with options and your recommendation; I decide. Then write it to the bar in "How to write a planning doc" below. I review it and set it to Approved; nothing is built from a doc I have not approved. The numbers in spike reports come from my measurements, not yours.
 - **You own:** the planning docs, this file, `docs/PROJECT_BRIEF.md`, `docs/PROGRESS.md`, and later the course skill in `.claude/skills/`. Keep them current as decisions change. You also draft ticket text and review reports.
 - **Commands:** run only read-only ones yourself (`git status`, `git diff`, `git log`, `pnpm lint`, `pnpm typecheck`, `gh issue list/view`, `gh pr list/view/diff/checks`, `gh run view`, `gh repo view`). For anything that changes the repo or GitHub (installs, scaffolding, `prettier --write`, `eslint --fix`, git writes, creating repos, PRs or merges, deploys), tell me the command and what it does. I run it. One exception: file an issue with `gh issue create` when I tell you to for that ticket.
 - Never offer to "just do it" for me, even when I am stuck or slow. If I ask you to write code, remind me of this rule once and ask me to confirm.
@@ -148,7 +148,7 @@ Copy patterns and conventions, not versions. crusher is on Next 15 and Tailwind 
 - `apps/api`: Express + zod, structured like crusher's API
 - `packages/config`: shared tsconfig, ESLint and Prettier config
 - `packages/contracts`: zod schemas and types shared by web and api
-- Models: glTF (`.glb`), made in Blender, compressed before they enter the repo
+- Models: none. Both hero scenes are three.js primitives (ADR 0010, `docs/3D_DESIGN.md`); a glTF from Blender only if a prop fails review
 - GitHub: public repo, Issues and milestones for tickets, Actions for CI
 - Hosting: Vercel Hobby (ADR 0003), two projects (web, api) from this repo; a preview URL per PR, production from `main` on buildwithshivam.in
 - Use the latest stable versions at install time, except where an ADR pins one (TypeScript 6.0.x, ADR 0005; pnpm 10.34.6, ADR 0008; ESLint 9.39.5, ADR 0009), and confirm they work together (for example, which TypeScript version Next.js supports, and which React version React Three Fiber supports) before I install.
@@ -169,17 +169,25 @@ Copy patterns and conventions, not versions. crusher is on Next 15 and Tailwind 
 
 ## Design tokens
 
-Define once in the Tailwind theme (Tailwind 4: an `@theme` block in CSS) and use everywhere.
+Define once in the Tailwind theme (Tailwind 4: an `@theme` block in CSS) and use everywhere. Two themes (UI_DESIGN §3.1, decided 2026-10-08): dark is the crusher, light is the clinic. Values updated 2026-10-09 to dark background B and the four light-theme tokens. Pairings and contrast ratios are in UI_DESIGN §3.1.
 
-| Token        | Value     | Use                      |
-| ------------ | --------- | ------------------------ |
-| `basalt-950` | `#0B0C0E` | page background          |
-| `basalt-900` | `#131519` | raised surfaces          |
-| `stone-600`  | `#5B6068` | borders, muted shapes    |
-| `stone-400`  | `#9AA0A8` | secondary text           |
-| `stone-100`  | `#E7E5E0` | primary text             |
-| `signal`     | `#FF6A13` | the single accent        |
-| `clinic`     | `#19B5A5` | ClinicXpert section only |
+| Token        | Value     | Dark theme (crusher)                      | Light theme (clinic)                      |
+| ------------ | --------- | ----------------------------------------- | ----------------------------------------- |
+| `basalt-950` | `#15120F` | page background; text on `signal` buttons | text on `clinic` buttons                  |
+| `basalt-900` | `#1E1A16` | raised surfaces                           | body text; the clinic scene's wall screen |
+| `stone-600`  | `#5E574F` | decorative dividers, muted shapes         | secondary text, field borders             |
+| `stone-400`  | `#A39C93` | secondary text, field borders             | muted shapes                              |
+| `stone-100`  | `#E7E5E0` | primary text                              | paper and desk in the clinic scene        |
+| `chalk-50`   | `#F6F8F7` | —                                         | page background                           |
+| `chalk-200`  | `#D3DAD8` | —                                         | decorative dividers                       |
+| `signal`     | `#FF6A13` | the single accent: buttons, links, focus  | fills and illustration only, never text   |
+| `signal-700` | `#B5470F` | —                                         | errors and crusher accents                |
+| `clinic`     | `#19B5A5` | ClinicXpert accents                       | the accent: button fills, illustration    |
+| `clinic-700` | `#0E7C71` | —                                         | links and focus ring                      |
+
+Raised surfaces in the light theme are plain white, `#FFFFFF`, not a token. Neither `signal` nor `clinic` is ever text on a light background.
+
+How the themes switch is ADR 0012: `data-theme` on `<html>`, set by an inline script before paint, and a semantic layer (background, surface, text, link, focus, error and so on) defined once per theme over these tokens. Components use the role utilities, never a palette token; only the 3D scenes and the "other project" accents use the palette directly.
 
 Fonts: Barlow Condensed (headings), Inter (body), JetBrains Mono (numbers and data). Load them with `next/font`.
 
@@ -198,7 +206,7 @@ apps/
         three/        canvas, scenes, 3D objects
       content/        typed copy and case-study data
       lib/            helpers, animation setup
-    public/models/    compressed .glb files
+    public/           the two hero stills (no models, ADR 0010)
   api/
     src/
       <resource>/     routes.ts + service.ts
@@ -215,6 +223,7 @@ docs/
   PRD.md              requirements (Claude, approved by me)
   ARCHITECTURE.md     system design and risk register (Claude, approved by me)
   UI_DESIGN.md        wireframes and hero storyboard (Claude, approved by me)
+  3D_DESIGN.md        scene design: cast, camera, keyframes, budget (Claude, approved by me)
   adr/                one file per decision (Claude, approved by me)
   spikes/             spike reports (Claude, from my measurements)
 ```

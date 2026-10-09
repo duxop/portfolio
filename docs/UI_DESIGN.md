@@ -14,6 +14,8 @@ How the page looks and behaves: the principles, the visual system, a low-fi wire
 
 All copy on it is draft; bracketed values are placeholders. Once approved, it replaces the _proposal_ sizes here, and any token it adds or changes goes into `CLAUDE.md`.
 
+**Revision: Draft**, 2026-10-09. Two storyboard amendments from the scene design ([`3D_DESIGN.md`](3D_DESIGN.md); ADR 0010, ADR 0011): no text inside a scene, so the clinic's wall screen shows a `clinic` block and rows instead of words, and seated patients hold a `clinic` token card instead of a number (§5.2). §5 now points at the scene design. How the two themes are built (the `data-theme` attribute, a semantic token layer over §3.1's tables, the before-paint script) is ADR 0012.
+
 ---
 
 ## 1. Principles
@@ -292,7 +294,7 @@ The honeypot field (ADR 0006) is hidden from sight and from screen readers, and 
 
 The hero holds still while the visitor scrolls one screen height. Over that distance, scroll progress runs from 0 to 1 and drives the scene. The movement is scrubbed, so scrolling back reverses it. The text never moves or changes: it's real HTML beside the canvas (or above it on a phone).
 
-There is one scene per theme (decided 2026-10-08). Only the current theme's scene loads. Switching themes swaps the static image at once, and loads the other scene only if the visitor stays on it. Both scenes share the same rules (below), the same timing, and the same look: low-poly, flat-shaded, few colours.
+There is one scene per theme (decided 2026-10-08). Only the current theme's scene loads. Switching themes swaps the static image at once, and loads the other scene only if the visitor stays on it. Both scenes share the same rules (below), the same timing, and the same look: low-poly, flat-shaded, few colours. The scene design, with each cast member's count, size, position and keyframes, is [`3D_DESIGN.md`](3D_DESIGN.md).
 
 ### 5.1 Dark: the crusher
 
@@ -329,20 +331,20 @@ There is one scene per theme (decided 2026-10-08). Only the current theme's scen
 - Low-poly people: a sphere head and a tapered body. Staff are `clinic`; patients are `stone-400` and `stone-600`.
 - Paper sheets and files (white, with teal rules).
 - A row of waiting chairs.
-- A wall screen (`basalt-900`) that becomes a queue display: "Now serving" with a `clinic` number, and the queue as rows.
+- A wall screen (`basalt-900`) that becomes a queue display: a `clinic` block where "Now serving" would be, and the queue as rows. No text inside the scene; the meaning is in the alt text (amended 2026-10-09).
 
 **Light and camera.**
 
 - Bright, even light from above (a clinic's ceiling light), and a soft fill.
 - The same camera as the crusher scene, so the two read as a pair.
 
-| Progress         | The scene shows                                                                                                                        | On screen |
-| ---------------- | -------------------------------------------------------------------------------------------------------------------------------------- | --------- |
-| Load (no scroll) | **Chaos.** Papers flutter in the air, people hurry with files at odd angles, chairs sit out of line, and the wall screen is blank      | As 5.1    |
-| 0 → 0.35         | The papers slow and turn toward the wall screen; the people slow down                                                                  | Unchanged |
-| 0.35 → 0.65      | **Gathering.** The papers stream into the screen and become its rows; the people turn toward the desk                                  | Unchanged |
-| 0.65 → 0.90      | **Ordered.** The chairs line up and the patients sit with token numbers; the desk keeps one tidy stack; the screen shows "Now serving" | Unchanged |
-| 0.90 → 1         | The room settles. The pin releases                                                                                                     | As 5.1    |
+| Progress         | The scene shows                                                                                                                                                | On screen |
+| ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- |
+| Load (no scroll) | **Chaos.** Papers flutter in the air, people hurry with files at odd angles, chairs sit out of line, and the wall screen is blank                              | As 5.1    |
+| 0 → 0.35         | The papers slow and turn toward the wall screen; the people slow down                                                                                          | Unchanged |
+| 0.35 → 0.65      | **Gathering.** The papers stream into the screen and become its rows; the people turn toward the desk                                                          | Unchanged |
+| 0.65 → 0.90      | **Ordered.** The chairs line up and the patients sit, each holding a `clinic` token card; the desk keeps one tidy stack; the screen's `clinic` block lights up | Unchanged |
+| 0.90 → 1         | The room settles. The pin releases                                                                                                                             | As 5.1    |
 
 **Static image** alt text: "A busy clinic reception, papers flying and people rushing, turns into an orderly waiting room with a queue screen."
 
