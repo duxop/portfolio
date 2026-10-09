@@ -14,7 +14,7 @@ How the page looks and behaves: the principles, the visual system, a low-fi wire
 
 All copy on it is draft; bracketed values are placeholders. Once approved, it replaces the _proposal_ sizes here, and any token it adds or changes goes into `CLAUDE.md`.
 
-**Revision: Draft**, 2026-10-09. Two storyboard amendments from the scene design ([`3D_DESIGN.md`](3D_DESIGN.md); ADR 0010, ADR 0011): no text inside a scene, so the clinic's wall screen shows a `clinic` block and rows instead of words, and seated patients hold a `clinic` token card instead of a number (§5.2). §5 now points at the scene design. How the two themes are built (the `data-theme` attribute, a semantic token layer over §3.1's tables, the before-paint script) is ADR 0012.
+**Revision: Approved**, 2026-10-09. Two storyboard amendments from the scene design ([`3D_DESIGN.md`](3D_DESIGN.md); ADR 0010, ADR 0011): no text inside a scene, so the clinic's wall screen shows a `clinic` block and rows instead of words, and seated patients hold a `clinic` token card instead of a number (§5.2). §5 now points at the scene design. How the two themes are built (the `data-theme` attribute, a semantic token layer over §3.1's tables, the before-paint script) is ADR 0012.
 
 ---
 
