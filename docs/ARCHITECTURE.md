@@ -4,6 +4,8 @@ How the portfolio site is built and run. This is the engineering half of the des
 
 **Status: Approved**, 2026-10-03. Written by Claude, approved by me. Facts about third-party services carry the date the docs were checked.
 
+**Amended 2026-10-09:** one 3D scene per theme, from primitives, scrubbed by scroll (§3; ADR 0010, ADR 0011; [`3D_DESIGN.md`](3D_DESIGN.md)); the theme is set before the first paint (§3; ADR 0012); no model files (§3 budgets); R1 covers both scenes.
+
 ---
 
 ## 1. The system in one picture
@@ -67,15 +69,15 @@ The page has no request-time data. All copy lives in typed files under `apps/web
 
 **Load order.** Each stage is useful without the next:
 
-1. **HTML, CSS and fonts** (`next/font`). The hero headline is the LCP element (PRD NFR-1). Every section's text is here, so the page reads with JavaScript off (FR-1).
+1. **HTML, CSS and fonts** (`next/font`). The hero headline is the LCP element (PRD NFR-1). Every section's text is here, so the page reads with JavaScript off (FR-1). The theme is set before the first paint: a small inline script in the `<head>` reads the saved choice or the device setting and marks the `<html>` element, so there is no flash of the wrong theme (FR-2). How that is built, with the semantic token layer over the palette, is [ADR 0012](adr/0012-two-themes.md).
 2. **Hydration** of the form and the header. The WhatsApp and email links never needed JavaScript.
 3. **Motion**, after hydration. With `prefers-reduced-motion`, nothing animates and every element sits in its final state.
-4. **3D**, last: a separately loaded chunk (`next/dynamic`, client-only), requested only when WebGL is available and reduced motion is off. A static image of the refined state is in the HTML from the start; the canvas replaces it once ready, and the image stays if the chunk fails (FR-4, NFR-4).
+4. **3D**, last: one separately loaded chunk per theme's scene (`next/dynamic`, client-only), requested only when WebGL is available and reduced motion is off, and only for the current theme. Switching themes unmounts one scene before the other loads, so one is ever in memory. The scenes are three.js primitives with no model files (ADR 0010), scrubbed by scroll (ADR 0011); the design is [`3D_DESIGN.md`](3D_DESIGN.md). A static image of the refined state is in the HTML from the start; the canvas replaces it once ready, and the image stays if the chunk fails (FR-4, NFR-4).
 
 **Budgets** (PRD NFR-1):
 
 - LCP ≤ 2.5 s, INP ≤ 200 ms and CLS ≤ 0.1 at p75 on mobile.
-- Models ≤ 1.5 MB compressed in total.
+- Models ≤ 1.5 MB compressed in total. There are none (ADR 0010); the ceiling stays in case one is ever added.
 - Pixel ratio capped at 2 on desktop and 1.5 on phones.
 - An initial-JavaScript budget is set here after the spike (stage 5) measures what the scene costs.
 
@@ -216,16 +218,16 @@ Crusher's API tests (`../crusher/apps/api/tests`) are the reference for the supe
 
 ## 10. Risks
 
-| #   | Risk                                                                                    | Impact                                  | Mitigation                                                                                               | When    |
-| --- | --------------------------------------------------------------------------------------- | --------------------------------------- | -------------------------------------------------------------------------------------------------------- | ------- |
-| R1  | The hero scene is too heavy for a mid-range Android phone                               | Fails G3 and G5                         | The spike measures it on a real phone first. The static image is always the fallback. ADR from the spike | Stage 5 |
-| R2  | The crusher client doesn't approve the figures                                          | A weaker case study                     | Qualitative version ready (PRD §8)                                                                       | M1      |
-| R3  | Bots post directly to the API's `*.vercel.app` URL, skipping the web project's WAF rule | Spam; Resend's cap used up              | Honeypot. A WAF rule on the `api` project too. Check what IP the API sees behind the proxy               | M2      |
-| R4  | Vercel picks the wrong Express entry file                                               | The API deploy fails or serves nothing  | Check on the first deploy; rename `src/app.ts` if needed                                                 | M0      |
-| R5  | A spam flood exhausts Resend's 100-a-day cap                                            | Real enquiries fail that day            | R3's mitigations. The failure state offers WhatsApp and email. Alerting (FR-12)                          | M2, M6  |
-| R6  | Vercel applies its non-commercial clause to the site                                    | Projects paused until upgraded or moved | Owner's call, handled if it happens. Nothing in the code is tied to Hobby (ADR 0003)                     | —       |
-| R7  | Learning pace stretches the schedule                                                    | Late launch                             | Milestones ship on their own. M2 is already a site worth sending                                         | Ongoing |
-| R8  | A free tier or price changes                                                            | Cost or a feature lost                  | ADRs record dates and revisit triggers                                                                   | Ongoing |
+| #   | Risk                                                                                    | Impact                                  | Mitigation                                                                                                                                                                                                                    | When    |
+| --- | --------------------------------------------------------------------------------------- | --------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| R1  | The hero scene is too heavy for a mid-range Android phone                               | Fails G3 and G5                         | The spike measures it on a real phone first. The static image is always the fallback. ADR from the spike. Both scenes share one camera, two lights and about ten draw calls (3D_DESIGN §6), so the spike's result covers both | Stage 5 |
+| R2  | The crusher client doesn't approve the figures                                          | A weaker case study                     | Qualitative version ready (PRD §8)                                                                                                                                                                                            | M1      |
+| R3  | Bots post directly to the API's `*.vercel.app` URL, skipping the web project's WAF rule | Spam; Resend's cap used up              | Honeypot. A WAF rule on the `api` project too. Check what IP the API sees behind the proxy                                                                                                                                    | M2      |
+| R4  | Vercel picks the wrong Express entry file                                               | The API deploy fails or serves nothing  | Check on the first deploy; rename `src/app.ts` if needed                                                                                                                                                                      | M0      |
+| R5  | A spam flood exhausts Resend's 100-a-day cap                                            | Real enquiries fail that day            | R3's mitigations. The failure state offers WhatsApp and email. Alerting (FR-12)                                                                                                                                               | M2, M6  |
+| R6  | Vercel applies its non-commercial clause to the site                                    | Projects paused until upgraded or moved | Owner's call, handled if it happens. Nothing in the code is tied to Hobby (ADR 0003)                                                                                                                                          | —       |
+| R7  | Learning pace stretches the schedule                                                    | Late launch                             | Milestones ship on their own. M2 is already a site worth sending                                                                                                                                                              | Ongoing |
+| R8  | A free tier or price changes                                                            | Cost or a feature lost                  | ADRs record dates and revisit triggers                                                                                                                                                                                        | Ongoing |
 
 ## 11. Decision index
 
@@ -240,5 +242,8 @@ Crusher's API tests (`../crusher/apps/api/tests`) are the reference for the supe
 | [0007](adr/0007-analytics-vercel-web-analytics.md) | Page views from Vercel; contact actions counted from the messages | Accepted |
 | [0008](adr/0008-pnpm-10.md)                        | Pin pnpm 10.34.6 with the `packageManager` field                  | Accepted |
 | [0009](adr/0009-eslint-9.md)                       | Pin ESLint 9.39.5, because Next's lint plugins stop at ESLint 9   | Accepted |
+| [0010](adr/0010-hero-scenes-from-primitives.md)    | Hero scenes from three.js primitives, no Blender                  | Accepted |
+| [0011](adr/0011-scroll-driven-scene-animation.md)  | One scroll trigger, one frame loop, keyframes per instance        | Accepted |
+| [0012](adr/0012-two-themes.md)                     | Two themes: `data-theme`, semantic roles, an inline script        | Accepted |
 
 Still to decide, each at the milestone named: the alerting tool (M6), the security header set (M2), the browser-side validation approach (M2), where `API_ORIGIN` lives locally (M0), and the initial-JavaScript budget (after the spike).

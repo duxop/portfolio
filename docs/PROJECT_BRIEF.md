@@ -20,14 +20,14 @@ A stone crusher takes raw rock and turns it into sorted, graded material. I take
 
 ## 3. Page structure
 
-| #   | Section                 | Content                                                      | Motion / 3D                                                                                                                            |
-| --- | ----------------------- | ------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------- |
-| 1   | Hero                    | Headline, one-line sub, primary button                       | The signature 3D scene: raw clutter passes through a crusher shape and comes out as ordered blocks forming a dashboard. Scroll-driven. |
-| 2   | Proof strip             | Four numbers                                                 | Count-up on enter                                                                                                                      |
-| 3   | Case study: Crusher ERP | Problem, what I observed, what I built, result, before/after | Low-poly plant: weighbridge, conveyor, trucks. Each truck leaving becomes an invoice row, then a chart.                                |
-| 4   | Case study: ClinicXpert | Same structure, link to live product                         | Calmer scene: patient tokens flow into a queue. Teal accent.                                                                           |
-| 5   | How I work              | Observe → Map → Build → Hand over                            | Four steps revealed in sequence, simple line drawing                                                                                   |
-| 6   | Contact                 | "Tell me how your business runs today." WhatsApp + email     | Minimal                                                                                                                                |
+| #   | Section                 | Content                                                      | Motion / 3D                                                                                                                                                                                                       |
+| --- | ----------------------- | ------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1   | Hero                    | Headline, one-line sub, primary button                       | The signature 3D scene: raw clutter passes through a crusher shape and comes out as ordered blocks forming a dashboard. Scroll-driven. One scene per theme (2026-10-08): the crusher in dark, the clinic in light |
+| 2   | Proof strip             | Four numbers                                                 | Count-up on enter                                                                                                                                                                                                 |
+| 3   | Case study: Crusher ERP | Problem, what I observed, what I built, result, before/after | A still image: a frame of the crusher hero scene (changed 2026-10-08)                                                                                                                                             |
+| 4   | Case study: ClinicXpert | Same structure, link to live product                         | A still image: a frame of the clinic hero scene. Teal accent (changed 2026-10-08)                                                                                                                                 |
+| 5   | How I work              | Observe → Map → Build → Hand over                            | Four steps revealed in sequence, simple line drawing                                                                                                                                                              |
+| 6   | Contact                 | "Tell me how your business runs today." WhatsApp + email     | Minimal                                                                                                                                                                                                           |
 
 **Headline options to choose from**
 
@@ -67,7 +67,7 @@ This repo is public, so the crusher client's figures stay out of it until the ow
 ## 5. Visual direction
 
 - **Mood:** industrial, precise, calm. A quarry at dusk, not a neon tech demo.
-- **Colour tokens (starting values, tune in the browser):**
+- **Colour tokens (starting values, tune in the browser).** Revised 2026-10-08: dark background B, and four light-theme tokens for the clinic theme. `CLAUDE.md` holds the current table.
   - `basalt-950` `#0B0C0E` page background
   - `basalt-900` `#131519` raised surfaces
   - `stone-600` `#5B6068` borders, muted shapes
@@ -88,7 +88,7 @@ This repo is public, so the crusher client's figures stay out of it until the ow
 | API                           | Express + zod in `apps/api`, structured like crusher's API; schemas shared through `packages/contracts`              |
 | Styling                       | Tailwind CSS                                                                                                         |
 | 3D                            | Three.js through React Three Fiber + drei                                                                            |
-| Models                        | Blender; free low-poly packs (Kenney, Poly Pizza) as a base                                                          |
+| Models                        | None: both hero scenes are three.js primitives (ADR 0010, 2026-10-09). Blender only if a prop fails review           |
 | Scroll and timeline animation | GSAP + ScrollTrigger                                                                                                 |
 | Smooth scroll                 | Lenis                                                                                                                |
 | UI micro-motion               | Motion                                                                                                               |
@@ -121,6 +121,10 @@ _Exit:_ reviewed and Approved; no blocking question left open.
 
 _Exit:_ all three reviewed and Approved.
 
+**Stage 2b: Visual design** (added 2026-10-08, during M0)
+A high-fidelity mockup of `UI_DESIGN.md` on a design canvas: every section at 360 and 1280 px, a style board, the headline options, the hero storyboard, the form states. Claude builds it, I review and approve. M0's design-token ticket (#9) waits for it; the other M0 tickets do not.
+_Exit:_ I approve the visual design, and `UI_DESIGN.md` and `CLAUDE.md` are updated from it.
+
 **Stage 3: Planning**
 GitHub milestones M0–M6 (below). M0's tickets filed, each with acceptance criteria and a link to the doc section it implements; later milestones are ticketed when they start. The Definition of Done lives in `CLAUDE.md`.
 _Exit:_ M0's tickets are filed.
@@ -149,8 +153,8 @@ Each ticket goes issue → branch → steps → PR → CI and preview → review
 - **M1 Content:** all copy and both case studies as typed data. _Exit:_ every section's text exists and reads well as a plain document.
 - **M2 The 2D site:** layout, all six sections, responsive from 360px up, real content, a working contact path. _Exit:_ I would be comfortable sending this link to a client even with no animation.
 - **M3 Motion:** Lenis, ScrollTrigger reveals, number count-ups, pinned case-study sections, reduced-motion fallbacks. _Exit:_ scroll feels smooth on a mid-range Android phone.
-- **M4 Hero 3D:** the hero from primitives only (flat-shaded icosahedrons as rocks, planes as spreadsheet cells, boxes as dashboard blocks), tied to scroll, built on the spike's result. _Exit:_ the Raw → Refined transition works end to end with no Blender models.
-- **M5 Project scenes:** the crusher plant and the clinic scene, modelled in Blender or adapted from free packs, exported as glTF, compressed, lazy-loaded. The launch waits for them (PRD Q5). _Exit:_ both scenes run, and each model set stays inside the budget in §8.
+- **M4 Hero 3D, crusher:** the dark theme's hero scene from primitives only (flat-shaded icosahedrons as rocks, planes as spreadsheet cells, boxes as dashboard blocks), tied to scroll, built on the spike's result and `docs/3D_DESIGN.md`. _Exit:_ the Raw → Refined transition works end to end, and the still is a render of the scene.
+- **M5 Hero 3D, clinic:** the light theme's hero scene, the same skeleton as M4 with the clinic cast. (Changed 2026-10-08: the case studies use stills, so there are no project scenes; ADR 0010 drops Blender.) The launch waits for it (PRD Q5). _Exit:_ both hero scenes run within the budget in §8, and both stills are renders.
 
 **Stage 7: M6 Launch readiness**
 A pre-launch checklist (reference: `../crusher/docs/PRE_LAUNCH_CHECKLIST.md`): performance on a real low-end phone, static fallback for weak devices, accessibility pass, security, SEO and social preview, analytics and error tracking, sign-off from both clients on every number and quote, buildwithshivam.in pointed at production. Then a go/no-go, a soft launch to two or three people, fixes, and the public launch.
@@ -170,7 +174,7 @@ Two to four weeks after launch: measure against the PRD's success metrics, write
 
 ## 9. Cautions
 
-- One excellent 3D scene beats five average ones. The hero is the priority; the project scenes come after it (M5), and the launch waits for them (PRD Q5).
+- One excellent 3D scene beats five average ones. The hero is the priority: the crusher scene first (M4), the clinic scene after it (M5), and the launch waits for both (PRD Q5).
 - The 3D earns attention; the case studies win the client. Never let animation delay or hide the content.
 - No real client data in screenshots or recordings.
 - No guarantees in the copy. Results, with context.

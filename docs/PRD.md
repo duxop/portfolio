@@ -4,6 +4,8 @@ What the portfolio site must do, and how we will know it works. This is the prod
 
 **Status: Approved**, 2026-10-03. Written by Claude, approved by me. Q2–Q4 were decided at approval, as proposed. Amended the same day: launch waits for the project scenes (Q5); hosting stays on Vercel Hobby (ADR 0003: NFR-8, A4, Q8); the domain is buildwithshivam.in (§8, Q11); contact actions are counted from the messages (ADR 0007: G2, FR-9, FR-15).
 
+**Amended 2026-10-09** (two themes, decided 2026-10-08, and the 3D design of 2026-10-09): one hero scene per theme, built from primitives (FR-4; ADR 0010, ADR 0011; [`3D_DESIGN.md`](3D_DESIGN.md)); the case studies use still images (FR-6, FR-7, §5); a theme toggle in the header (FR-2); no model files (NFR-1); M5 is the clinic scene (Q5).
+
 ---
 
 ## 1. The shape of it
@@ -47,7 +49,7 @@ I build software around how a business actually works, and I have two systems in
 - **No resume, employer or agency content** (decided).
 - **No booking calendar, chatbot or newsletter.**
 - **No more than the two case studies.**
-- **No 3D for its own sake.** Three scenes, the hero and one per case study, each with a static fallback, and no others.
+- **No 3D for its own sake.** Two scenes, both in the hero, one per theme, each with a static fallback, and no others. The case studies use still images (amended 2026-10-09).
 
 ## 6. Functional requirements
 
@@ -58,7 +60,7 @@ I build software around how a business actually works, and I have two systems in
 **FR-1 One page, six sections.** _Must._ A single page at `/` with the sections in this order: Hero, Proof strip, Case study: Crusher ERP, Case study: ClinicXpert, How I work, Contact.
 _Accepted when_ every section's text is in the server-rendered HTML, and the page reads top to bottom with JavaScript turned off.
 
-**FR-2 Header and skip link.** _Must._ My name, and a "Get in touch" link to Contact. A skip link to the main content is the first focusable element.
+**FR-2 Header and skip link.** _Must._ My name, and a "Get in touch" link to Contact. A skip link to the main content is the first focusable element. A theme toggle: two icon buttons, crusher (dark) and clinic (light). The first visit follows the device's setting, the choice is remembered, and the theme is set before the page paints, so there is no flash of the wrong theme (UI_DESIGN §1, §3.4; ADR 0012; added 2026-10-09).
 
 **FR-3 Not-found page.** _Should._ In the site's style, with a link home.
 
@@ -67,7 +69,7 @@ _Accepted when_ every section's text is in the server-rendered HTML, and the pag
 **FR-4 Hero.** _Must._
 
 - A headline (one of the three options in brief §3, chosen in M1), a one-line sub, and a primary button to Contact.
-- A scroll-driven 3D scene: raw clutter passes through a crusher shape and comes out as ordered blocks forming a dashboard (brief §3).
+- A scroll-driven 3D scene, one per theme (UI_DESIGN §5, [`3D_DESIGN.md`](3D_DESIGN.md)). Dark: raw clutter passes through a crusher and comes out as a dashboard. Light: a chaotic clinic reception becomes an orderly waiting room. Both are built from three.js primitives (ADR 0010) and scrubbed by scroll (ADR 0011). Only the current theme's scene loads.
 - With reduced motion on, without WebGL, or if the scene fails to load, a static image of the refined state shows instead. The headline and button never wait for the scene.
 - The spike (stage 5) may downgrade the scene to a simpler one or to the static image. If it does, this requirement is updated.
 
@@ -84,13 +86,13 @@ _Accepted when_ the headline is the LCP element, and with reduced motion on noth
 - The "before" is a photo or recreation of the old Excel sheet. The "after" uses dummy data only.
 - Results are stated with how they were measured, never as a guarantee.
 - An "under the hood" block: the stack and architecture in a few lines, for developers.
-- The low-poly plant scene (weighbridge, conveyor, trucks; each truck leaving becomes an invoice row, then a chart), with the same static-image fallback as FR-4. The section's text never depends on it.
+- A still image: a frame of the crusher hero scene (UI_DESIGN §4.3). No 3D in this section (amended 2026-10-09).
 
 **FR-7 Case study: ClinicXpert.** _Must._
 
 - The same structure as FR-6, plus a link to the live product, https://app.clinicxpert.in/.
 - The teal `clinic` accent, used in this section only.
-- The calmer scene (patient tokens flow into a queue), with the same static-image fallback as FR-4.
+- A still image: a frame of the clinic hero scene (UI_DESIGN §4.3). No 3D in this section (amended 2026-10-09).
 
 **FR-8 How I work.** _Must._
 
@@ -148,7 +150,7 @@ _Accepted when_ a WhatsApp chat and an email started from the site are recognisa
 - LCP ≤ 2.5 s, INP ≤ 200 ms and CLS ≤ 0.1 at the 75th percentile on mobile.
 - The hero headline, not the canvas, is the LCP element.
 - 3D code and models load after first paint, never in the page's initial JavaScript.
-- All models together ≤ 1.5 MB compressed.
+- All models together ≤ 1.5 MB compressed. With ADR 0010 there are no model files, so this is a ceiling nothing uses.
 - Pixel ratio capped at 2 on desktop and 1.5 on phones.
 - An initial-JavaScript budget is set in `ARCHITECTURE.md`, using the spike's numbers.
 
@@ -243,19 +245,19 @@ Check these after launch, using analytics and enquiries.
 
 ## 11. Open questions
 
-| #   | Question                                            | Blocks                  | Proposed answer                                                                              |
-| --- | --------------------------------------------------- | ----------------------- | -------------------------------------------------------------------------------------------- |
-| Q1  | Which four numbers go in the proof strip?           | M1                      | Decide once the crusher owner answers (§8)                                                   |
-| Q2  | Contact order: WhatsApp, then the form, then email? | Decided 2026-10-03      | Yes, per A3                                                                                  |
-| Q3  | The form fields in FR-10?                           | Decided 2026-10-03      | Yes                                                                                          |
-| Q4  | The browser list in NFR-3?                          | Decided 2026-10-03      | Yes                                                                                          |
-| Q5  | Launch without the project scenes?                  | Decided 2026-10-03      | No. Launch after everything is built: the project scenes are M5, launch is M6 (brief §7)     |
-| Q6  | Typical duration of each "How I work" step          | M1                      | Taken from the two projects                                                                  |
-| Q7  | Target qualified enquiries per month                | Four weeks after launch | Set from the baseline                                                                        |
-| Q8  | Monthly budget for hosting and email                | Decided 2026-10-03      | ₹0: Vercel Hobby throughout (ADR 0003)                                                       |
-| Q9  | Target launch date                                  | Nothing                 | None set; planning is easier with one                                                        |
-| Q10 | Which headline                                      | M1                      | One of the three in brief §3                                                                 |
-| Q11 | Domain                                              | Decided 2026-10-03      | buildwithshivam.in, already owned. Verified with Resend before the M2 form ticket (ADR 0004) |
+| #   | Question                                            | Blocks                  | Proposed answer                                                                                                                          |
+| --- | --------------------------------------------------- | ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| Q1  | Which four numbers go in the proof strip?           | M1                      | Decide once the crusher owner answers (§8)                                                                                               |
+| Q2  | Contact order: WhatsApp, then the form, then email? | Decided 2026-10-03      | Yes, per A3                                                                                                                              |
+| Q3  | The form fields in FR-10?                           | Decided 2026-10-03      | Yes                                                                                                                                      |
+| Q4  | The browser list in NFR-3?                          | Decided 2026-10-03      | Yes                                                                                                                                      |
+| Q5  | Launch without the project scenes?                  | Decided 2026-10-03      | No. Launch after everything is built. Since 2026-10-08 there are no project scenes: M5 is the clinic hero scene, launch is M6 (brief §7) |
+| Q6  | Typical duration of each "How I work" step          | M1                      | Taken from the two projects                                                                                                              |
+| Q7  | Target qualified enquiries per month                | Four weeks after launch | Set from the baseline                                                                                                                    |
+| Q8  | Monthly budget for hosting and email                | Decided 2026-10-03      | ₹0: Vercel Hobby throughout (ADR 0003)                                                                                                   |
+| Q9  | Target launch date                                  | Nothing                 | None set; planning is easier with one                                                                                                    |
+| Q10 | Which headline                                      | M1                      | One of the three in brief §3                                                                                                             |
+| Q11 | Domain                                              | Decided 2026-10-03      | buildwithshivam.in, already owned. Verified with Resend before the M2 form ticket (ADR 0004)                                             |
 
 ## 12. Later (v2 candidates)
 
