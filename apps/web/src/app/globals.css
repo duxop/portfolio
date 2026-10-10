@@ -1,1 +1,21 @@
 @import 'tailwindcss';
+
+@theme {
+  --color-basalt-950: #15120f;
+  --color-basalt-900: #1e1a16;
+  --color-stone-600: #5e574f;
+  --color-stone-400: #a39c93;
+  --color-stone-100: #e7e5e0;
+  --color-chalk-50: #f6f8f7;
+  --color-chalk-200: #d3dad8;
+  --color-signal: #ff6a13;
+  --color-signal-700: #b5470f;
+  --color-clinic-700: #0e7c71;
+  --color-clinic: #19b5a5;
+}
+
+@theme inline {
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-jetbrains-mono);
+  --font-barlow-condensed: var(--font-barlow);
+}
