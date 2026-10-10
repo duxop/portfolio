@@ -19,3 +19,51 @@
   --font-mono: var(--font-jetbrains-mono);
   --font-barlow-condensed: var(--font-barlow);
 }
+
+:root {
+  color-scheme: dark;
+  --background: var(--color-basalt-950);
+  --surface: var(--color-basalt-900);
+  --foreground: var(--color-stone-100);
+  --muted: var(--color-stone-400);
+  --field: var(--color-stone-400);
+  --divider: var(--color-stone-600);
+  --accent: var(--color-signal);
+  --on-accent: var(--color-basalt-950);
+  --link: var(--color-signal);
+  --focus: var(--color-signal);
+  --error: var(--color-signal);
+  --other: var(--color-clinic);
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+  --background: var(--color-chalk-50);
+  --surface: var(--color-white);
+  --foreground: var(--color-basalt-900);
+  --muted: var(--color-stone-600);
+  --field: var(--color-stone-600);
+  --divider: var(--color-chalk-200);
+  --accent: var(--color-clinic);
+  --on-accent: var(--color-basalt-950);
+  --link: var(--color-clinic-700);
+  --focus: var(--color-clinic-700);
+  --error: var(--color-signal-700);
+  --other: var(--color-signal-700);
+}
+
+/* inline: each class reads the role variable on the element, so it follows the active theme. */
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-field: var(--field);
+  --color-divider: var(--divider);
+  --color-accent: var(--accent);
+  --color-on-accent: var(--on-accent);
+  --color-link: var(--link);
+  --color-focus: var(--focus);
+  --color-error: var(--error);
+  --color-other: var(--other);
+}
