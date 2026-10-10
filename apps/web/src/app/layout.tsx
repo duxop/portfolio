@@ -50,7 +50,7 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
-      <body className="bg-basalt-950 text-stone-100">{children}</body>
+      <body className="bg-background text-foreground">{children}</body>
     </html>
   );
 }
