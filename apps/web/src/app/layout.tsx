@@ -6,21 +6,18 @@ import { Barlow_Condensed, Inter, JetBrains_Mono } from 'next/font/google';
 
 const inter = Inter({
   subsets: ['latin'],
-  display: 'swap',
   variable: '--font-inter',
 });
 
-const barlow_condensed = Barlow_Condensed({
+const barlowCondensed = Barlow_Condensed({
   subsets: ['latin'],
-  display: 'swap',
   weight: ['600', '700'],
   variable: '--font-barlow',
 });
 
-const jetBrains_mono = JetBrains_Mono({
+const jetBrainsMono = JetBrains_Mono({
   subsets: ['latin'],
   variable: '--font-jetbrains-mono',
-  display: 'swap',
 });
 
 export const metadata: Metadata = {
@@ -32,9 +29,9 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${barlow_condensed.variable} ${jetBrains_mono.variable} antialiased`}
+      className={`${inter.variable} ${barlowCondensed.variable} ${jetBrainsMono.variable} antialiased`}
     >
-      <body>{children}</body>
+      <body className="bg-basalt-950 text-stone-100">{children}</body>
     </html>
   );
 }
