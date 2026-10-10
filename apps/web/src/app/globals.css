@@ -13,3 +13,9 @@
   --color-clinic-700: #0e7c71;
   --color-clinic: #19b5a5;
 }
+
+@theme inline {
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-jetbrains-mono);
+  --font-barlow-condensed: var(--font-barlow);
+}
